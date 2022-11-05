@@ -4,6 +4,24 @@ on isRunning(appName)
 	tell application "System Events" to (name of processes) contains appName
 end isRunning
 
+on isHebrew(theText)
+	set hebrewLetters to (every character of " אבגדהוזחטיכלמנסעפצקרשת")
+	repeat with theCharacter in (every character of theText)
+		if hebrewLetters does not contain theCharacter then
+			return false
+		end if
+	end repeat
+	return true
+end isHebrew
+
+on fixText(theText)
+	if isHebrew(theText) then
+		set theText to reverse of theText's items as text
+	end if
+	return theText
+end fixText
+
+
 on isPlaying(appName)
 	if isRunning(appName) then
 		using terms from application "Music"
@@ -29,9 +47,13 @@ on Playing()
 		tell application appName
 			set songName to the name of the current track
 			set songArtist to the artist of the current track
-			return songName + "  " + songArtist
 		end tell
+		set songName to fixText(songName)
+		set songArtist to fixText(songArtist)
+		set result to (songName & "  " & songArtist)
+		return result
 	end using terms from
 end Playing
 
 return Playing()
+
