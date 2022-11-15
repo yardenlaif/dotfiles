@@ -40,7 +40,7 @@ on Playing()
 		if isPlaying("Spotify") then
 			set appName to "Spotify"
 		else
-			return ""
+			return "♪"
 		end if
 	end if
 	using terms from application "Music"
