@@ -97,7 +97,7 @@ return packer.startup(function(use)
 	use { "folke/which-key.nvim" }
 
 	-- Colorschemes
-	use { "morhetz/gruvbox" }
+	use { "gruvbox-community/gruvbox" }
 
 	-- Cmp
 	use { "hrsh7th/nvim-cmp",
@@ -130,6 +130,71 @@ return packer.startup(function(use)
 	use { "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" } -- for formatters and linters
 	use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" }
 	use { "williamboman/nvim-lsp-installer" }
+	-- LSP Progress
+	use { "j-hui/fidget.nvim",
+		config = function()
+			require "fidget".setup {}
+		end
+	}
+	use { "kosayoda/nvim-lightbulb",
+		config = function()
+			-- Showing defaults
+			require('nvim-lightbulb').setup({
+				-- LSP client names to ignore
+				-- Example: {"sumneko_lua", "null-ls"}
+				ignore = {},
+				sign = {
+					enabled = true,
+					-- Priority of the gutter sign
+					priority = 10,
+				},
+				float = {
+					enabled = false,
+					-- Text to show in the popup float
+					text = "💡",
+					-- Available keys for window options:
+					-- - height     of floating window
+					-- - width      of floating window
+					-- - wrap_at    character to wrap at for computing height
+					-- - max_width  maximal width of floating window
+					-- - max_height maximal height of floating window
+					-- - pad_left   number of columns to pad contents at left
+					-- - pad_right  number of columns to pad contents at right
+					-- - pad_top    number of lines to pad contents at top
+					-- - pad_bottom number of lines to pad contents at bottom
+					-- - offset_x   x-axis offset of the floating window
+					-- - offset_y   y-axis offset of the floating window
+					-- - anchor     corner of float to place at the cursor (NW, NE, SW, SE)
+					-- - winblend   transparency of the window (0-100)
+					win_opts = {},
+				},
+				virtual_text = {
+					enabled = false,
+					-- Text to show at virtual text
+					text = "💡",
+					-- highlight mode to use for virtual text (replace, combine, blend), see :help nvim_buf_set_extmark() for reference
+					hl_mode = "replace",
+				},
+				status_text = {
+					enabled = false,
+					-- Text to provide when code actions are available
+					text = "💡",
+					-- Text to provide when no actions are available
+					text_unavailable = ""
+				},
+				autocmd = {
+					enabled = false,
+					-- see :help autocmd-pattern
+					pattern = { "*" },
+					-- see :help autocmd-events
+					events = { "CursorHold", "CursorHoldI" }
+				}
+			})
+		end
+	}
+	-- Code actions
+	use { "weilbith/nvim-code-action-menu",
+		cmd = 'CodeActionMenu' }
 
 	-- Telescope
 	use { "nvim-telescope/telescope.nvim", commit = "76ea9a898d3307244dce3573392dcf2cc38f340f" }
@@ -138,6 +203,13 @@ return packer.startup(function(use)
 		config = function()
 			require("telescope").load_extension "file_browser"
 		end
+	}
+	use {
+		"nvim-telescope/telescope-frecency.nvim",
+		config = function()
+			require "telescope".load_extension("frecency")
+		end,
+		requires = { "kkharji/sqlite.lua" }
 	}
 
 	-- Treesitter

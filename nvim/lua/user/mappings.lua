@@ -36,6 +36,7 @@ keymap("n", "<C-g>s", "<cmd>Gitsigns preview_hunk<CR>", opts)
 keymap("n", "<C-g>j", "<cmd>Gitsigns next_hunk<CR>", opts)
 keymap("n", "<C-g>k", "<cmd>Gitsigns prev_hunk<CR>", opts)
 keymap("n", "<C-g>a", "<cmd>Gitsigns diffthis<CR>", opts)
+keymap("n", "<C-g>r", "<cmd>Gitsigns reset_hunk<CR>", opts)
 
 -- Comment in visual mode
 keymap("x", "<C-_>", "<Plug>Commentary<CR>", opts)
