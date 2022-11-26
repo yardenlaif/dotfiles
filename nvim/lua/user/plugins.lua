@@ -215,7 +215,46 @@ return packer.startup(function(use)
 	-- Treesitter
 	use {
 		"nvim-treesitter/nvim-treesitter",
-		commit = "8e763332b7bf7b3a426fd8707b7f5aa85823a5ac",
+		event = "BufEnter",
+		config = function()
+			require 'nvim-treesitter.configs'.setup {
+				-- A list of parser names, or "all"
+				ensure_installed = { "lua", "go", "java", "c", "cpp", "yaml", "dockerfile", "cmake", "markdown" },
+
+				-- Install parsers synchronously (only applied to `ensure_installed`)
+				sync_install = false,
+
+				-- Automatically install missing parsers when entering buffer
+				-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+				auto_install = true,
+
+				-- List of parsers to ignore installing (for "all")
+				ignore_install = { "javascript" },
+
+				---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+				-- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+				highlight = {
+					-- `false` will disable the whole extension
+					enable = true,
+
+					-- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+					disable = function(lang, buf)
+						local max_filesize = 100 * 1024 -- 100 KB
+						local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+						if ok and stats and stats.size > max_filesize then
+							return true
+						end
+					end,
+
+					-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+					-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+					-- Using this option may slow down your editor, and you may see some duplicate highlights.
+					-- Instead of true it can also be a list of languages
+					additional_vim_regex_highlighting = false,
+				},
+			}
+		end
 	}
 
 	-- Git
@@ -258,14 +297,43 @@ return packer.startup(function(use)
 	use "~/personal/projects/runconfig.nvim"
 
 	-- Sessions
-	use {
-		'rmagatti/auto-session',
+	use { 'rmagatti/auto-session',
 		config = function()
 			require("auto-session").setup {
 				log_level = "error",
 				auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 			}
 		end
+	}
+
+	-- Tests
+	use {
+		"nvim-neotest/neotest",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-neotest/neotest-go",
+		},
+		config = function()
+			-- get neotest namespace (api call creates or returns namespace)
+			local neotest_ns = vim.api.nvim_create_namespace("neotest")
+			vim.diagnostic.config({
+				virtual_text = {
+					format = function(diagnostic)
+						local message =
+						diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+						return message
+					end,
+				},
+			}, neotest_ns)
+			require("neotest").setup({
+				-- your neotest config here
+				adapters = {
+					require("neotest-go"),
+				},
+			})
+		end,
 	}
 
 	-- Automatically set up your configuration after cloning packer.nvim

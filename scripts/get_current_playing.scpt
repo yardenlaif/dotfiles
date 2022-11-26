@@ -1,11 +1,11 @@
 #!/usr/bin/osascript
 
 on isRunning(appName)
-	tell application "System Events" to (name of processes) contains appName
+	return application appName is running
 end isRunning
 
 on isHebrew(theText)
-	set hebrewLetters to (every character of " אבגדהוזחטיכלמנסעפצקרשת")
+	set hebrewLetters to (every character of "-_()[]{},./=1234567890 אבגדהוזחטיכלמנסעפצקרשת")
 	repeat with theCharacter in (every character of theText)
 		if hebrewLetters does not contain theCharacter then
 			return false
