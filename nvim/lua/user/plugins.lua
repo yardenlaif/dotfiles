@@ -32,27 +32,68 @@ packer.init({
 
 -- Install your plugins here
 return packer.startup(function(use)
-	use { "wbthomason/packer.nvim", commit = "6afb67460283f0e990d35d229fd38fdc04063e0a" } -- Have packer manage itself
-	use { "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" } -- Useful lua functions used by lots of plugins
-	use { "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" } -- Autopairs, integrates with both cmp and treesitter
-	use { "numToStr/Comment.nvim", commit = "97a188a98b5a3a6f9b1b850799ac078faa17ab67" }
-	use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "4d3a68c41a53add8804f471fcc49bb398fe8de08" }
-	use { "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" }
-	use { "kyazdani42/nvim-tree.lua", config = function()
-		require("nvim-tree").setup()
-	end }
-	use { "akinsho/bufferline.nvim", commit = "83bf4dc7bff642e145c8b4547aa596803a8b4dc4" }
-	use { "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" }
-	use {
-		'nvim-lualine/lualine.nvim',
-		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+	use({ "wbthomason/packer.nvim", commit = "6afb67460283f0e990d35d229fd38fdc04063e0a" }) -- Have packer manage itself
+	use({ "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }) -- Useful lua functions used by lots of plugins
+	use({ "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" }) -- Autopairs, integrates with both cmp and treesitter
+	use({ "numToStr/Comment.nvim", commit = "97a188a98b5a3a6f9b1b850799ac078faa17ab67" })
+	-- use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "4d3a68c41a53add8804f471fcc49bb398fe8de08" }
+	use({ "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" })
+	use({
+		"kyazdani42/nvim-tree.lua",
 		config = function()
-			require('lualine').setup {
+			require("nvim-tree").setup()
+		end,
+	})
+	use({ "akinsho/bufferline.nvim", commit = "83bf4dc7bff642e145c8b4547aa596803a8b4dc4" })
+	use({ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" })
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+		config = function()
+			local navic = require("nvim-navic")
+			local f = function()
+				local d = navic.get_data()
+				local display_data = {}
+				local get_data_to_display = function(v)
+					return v["icon"] .. v["name"]
+				end
+				for _, v in pairs(d) do
+					if
+						v["kind"] == 5
+						or v["kind"] == 6
+						or v["kind"] == 10
+						or v["kind"] == 11
+						or v["kind"] == 12
+						or v["kind"] == 23
+					then
+						table.insert(display_data, v)
+					end
+				end
+				if next(display_data) == nil then
+					return ""
+				end
+				if #display_data == 1 then
+					return get_data_to_display(display_data[#display_data])
+				end
+				if #display_data == 2 then
+					return get_data_to_display(display_data[#display_data - 1])
+						.. "  "
+						.. get_data_to_display(display_data[#display_data])
+				end
+				if #display_data >= 3 then
+					return get_data_to_display(display_data[#display_data - 2])
+						.. "  "
+						.. get_data_to_display(display_data[#display_data - 1])
+						.. "  "
+						.. get_data_to_display(display_data[#display_data])
+				end
+			end
+			require("lualine").setup({
 				options = {
 					icons_enabled = true,
-					theme = 'gruvbox',
-					component_separators = { left = '', right = '' },
-					section_separators = { left = '', right = '' },
+					theme = "gruvbox",
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
 					disabled_filetypes = {
 						statusline = {},
 						winbar = {},
@@ -64,82 +105,129 @@ return packer.startup(function(use)
 						statusline = 1000,
 						tabline = 1000,
 						winbar = 1000,
-					}
+					},
 				},
 				sections = {
-					lualine_a = { 'mode' },
-					lualine_b = { 'branch', 'diff', 'diagnostics' },
-					lualine_c = { 'filename' },
-					lualine_x = { 'encoding', 'fileformat', 'filetype' },
-					lualine_y = { 'progress' },
-					lualine_z = { 'location' }
+					lualine_a = { "filename" },
+					lualine_b = { { f, cond = navic.is_available } },
+					lualine_c = { "branch", "diff", "diagnostics" },
+					lualine_x = { "encoding", "fileformat", "filetype" },
+					lualine_y = { "progress" },
+					lualine_z = { "location" },
 				},
 				inactive_sections = {
 					lualine_a = {},
 					lualine_b = {},
-					lualine_c = { 'filename' },
-					lualine_x = { 'location' },
+					lualine_c = { "filename" },
+					lualine_x = { "location" },
 					lualine_y = {},
-					lualine_z = {}
+					lualine_z = {},
 				},
 				tabline = {},
 				winbar = {},
 				inactive_winbar = {},
-				extensions = {}
-			}
-		end
-	}
-	use { "akinsho/toggleterm.nvim", commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" }
-	use { "ahmedkhalf/project.nvim", commit = "628de7e433dd503e782831fe150bb750e56e55d6" }
-	use { "lewis6991/impatient.nvim", commit = "b842e16ecc1a700f62adb9802f8355b99b52a5a6" }
-	use { "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" }
-	use { "goolord/alpha-nvim", commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" }
-	use { "folke/which-key.nvim" }
+				extensions = {},
+			})
+		end,
+	})
+	use({ "akinsho/toggleterm.nvim", commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" })
+	use({ "ahmedkhalf/project.nvim", commit = "628de7e433dd503e782831fe150bb750e56e55d6" })
+	use({ "lewis6991/impatient.nvim", commit = "b842e16ecc1a700f62adb9802f8355b99b52a5a6" })
+	use({ "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" })
+	use({ "goolord/alpha-nvim", commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" })
+	use({ "folke/which-key.nvim" })
 
 	-- Colorschemes
-	use { "gruvbox-community/gruvbox" }
+	use({ "sainnhe/gruvbox-material" })
 
 	-- Cmp
-	use { "hrsh7th/nvim-cmp",
+	use({
+		"hrsh7th/nvim-cmp",
 		config = function()
-			require("cmp").setup {}
-		end
-	} -- The completion plugin
-	use { "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" } -- buffer completions
-	use { "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" } -- path completions
-	use { "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" } -- snippet completions
-	use { "hrsh7th/cmp-nvim-lsp", commit = "3cf38d9c957e95c397b66f91967758b31be4abe6" }
-	use { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" }
+			require("cmp").setup({})
+		end,
+	}) -- The completion plugin
+	use({ "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }) -- buffer completions
+	use({ "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }) -- path completions
+	use({ "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" }) -- snippet completions
+	use({ "hrsh7th/cmp-nvim-lsp", commit = "3cf38d9c957e95c397b66f91967758b31be4abe6" })
+	use({ "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" })
 
 	-- Comment Toggle
-	use { "tpope/vim-commentary" }
+	use({ "tpope/vim-commentary" })
 
 	-- Snippets
-	use { "L3MON4D3/LuaSnip", commit = "8f8d493e7836f2697df878ef9c128337cbf2bb84" } --snippet engine
-	use { "rafamadriz/friendly-snippets", commit = "2be79d8a9b03d4175ba6b3d14b082680de1b31b1" } -- a bunch of snippets to use
+	use({ "L3MON4D3/LuaSnip", commit = "8f8d493e7836f2697df878ef9c128337cbf2bb84" }) --snippet engine
+	use({ "rafamadriz/friendly-snippets", commit = "2be79d8a9b03d4175ba6b3d14b082680de1b31b1" }) -- a bunch of snippets to use
 
 	-- LSP
-	use { "neovim/nvim-lspconfig",
+	use({
+		"neovim/nvim-lspconfig",
 		config = function()
-			require("nvim-lsp-installer").setup {}
+			require("nvim-lsp-installer").setup({})
 			require("user.lsp")
-		end
-	} -- enable LSP
-	use { "williamboman/mason.nvim", commit = "c2002d7a6b5a72ba02388548cfaf420b864fbc12" } -- simple to use language server installer
-	use { "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" }
-	use { "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" } -- for formatters and linters
-	use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" }
-	use { "williamboman/nvim-lsp-installer" }
-	-- LSP Progress
-	use { "j-hui/fidget.nvim",
+		end,
+	}) -- enable LSP
+	use({
+		"SmiteshP/nvim-navic",
+		requires = "neovim/nvim-lspconfig",
 		config = function()
-			require "fidget".setup {}
-		end
-	}
-	use { "kosayoda/nvim-lightbulb",
+			local navic = require("nvim-navic")
+			navic.setup({
+				icons = {
+					File = " ",
+					Module = " ",
+					Namespace = " ",
+					Package = " ",
+					Class = " ",
+					Method = " ",
+					Property = " ",
+					Field = " ",
+					Constructor = " ",
+					Enum = "練",
+					Interface = "練",
+					Function = " ",
+					Variable = " ",
+					Constant = " ",
+					String = " ",
+					Number = " ",
+					Boolean = "◩ ",
+					Array = " ",
+					Object = " ",
+					Key = " ",
+					Null = "ﳠ ",
+					EnumMember = " ",
+					Struct = " ",
+					Event = " ",
+					Operator = " ",
+					TypeParameter = " ",
+				},
+				highlight = false,
+				depth_limit_indicator = "..",
+				safe_output = true,
+				separator = "  ",
+				depth_limit = 3,
+			})
+		end,
+	})
+	use({ "williamboman/mason.nvim", commit = "c2002d7a6b5a72ba02388548cfaf420b864fbc12" }) -- simple to use language server installer
+	use({ "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" })
+	use({ "jose-elias-alvarez/null-ls.nvim" })
+	-- for formatters and linters
+	use({ "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" })
+	use({ "williamboman/nvim-lsp-installer" })
+	-- LSP Progress
+	use({
+		"j-hui/fidget.nvim",
+		config = function()
+			require("fidget").setup({})
+		end,
+	})
+	use({
+		"kosayoda/nvim-lightbulb",
 		config = function()
 			-- Showing defaults
-			require('nvim-lightbulb').setup({
+			require("nvim-lightbulb").setup({
 				-- LSP client names to ignore
 				-- Example: {"sumneko_lua", "null-ls"}
 				ignore = {},
@@ -180,44 +268,43 @@ return packer.startup(function(use)
 					-- Text to provide when code actions are available
 					text = "💡",
 					-- Text to provide when no actions are available
-					text_unavailable = ""
+					text_unavailable = "",
 				},
 				autocmd = {
 					enabled = false,
 					-- see :help autocmd-pattern
 					pattern = { "*" },
 					-- see :help autocmd-events
-					events = { "CursorHold", "CursorHoldI" }
-				}
+					events = { "CursorHold", "CursorHoldI" },
+				},
 			})
-		end
-	}
+		end,
+	})
 	-- Code actions
-	use { "weilbith/nvim-code-action-menu",
-		cmd = 'CodeActionMenu' }
+	use({ "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" })
 
 	-- Telescope
-	use { "nvim-telescope/telescope.nvim", commit = "76ea9a898d3307244dce3573392dcf2cc38f340f" }
-	use {
+	use({ "nvim-telescope/telescope.nvim", commit = "76ea9a898d3307244dce3573392dcf2cc38f340f" })
+	use({
 		"nvim-telescope/telescope-file-browser.nvim",
 		config = function()
-			require("telescope").load_extension "file_browser"
-		end
-	}
-	use {
+			require("telescope").load_extension("file_browser")
+			require("telescope").load_extension("frecency")
+		end,
+	})
+	use({
 		"nvim-telescope/telescope-frecency.nvim",
 		config = function()
-			require "telescope".load_extension("frecency")
+			require("telescope").load_extension("frecency")
 		end,
-		requires = { "kkharji/sqlite.lua" }
-	}
+		requires = { "kkharji/sqlite.lua" },
+	})
 
 	-- Treesitter
-	use {
+	use({
 		"nvim-treesitter/nvim-treesitter",
-		event = "BufEnter",
 		config = function()
-			require 'nvim-treesitter.configs'.setup {
+			require("nvim-treesitter.configs").setup({
 				-- A list of parser names, or "all"
 				ensure_installed = { "lua", "go", "java", "c", "cpp", "yaml", "dockerfile", "cmake", "markdown" },
 
@@ -253,61 +340,159 @@ return packer.startup(function(use)
 					-- Instead of true it can also be a list of languages
 					additional_vim_regex_highlighting = false,
 				},
-			}
-		end
-	}
+			})
+		end,
+	})
+	use({
+		"nvim-treesitter/nvim-treesitter-context",
+		config = function()
+			require("treesitter-context").setup({
+				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+				max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+				trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+				min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+				patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+					-- For all filetypes
+					-- Note that setting an entry here replaces all other patterns for this entry.
+					-- By setting the 'default' entry below, you can control which nodes you want to
+					-- appear in the context window.
+					default = {
+						"class",
+						"function",
+						"method",
+						"for",
+						"while",
+						"if",
+						"switch",
+						"case",
+						"interface",
+						"struct",
+						"enum",
+					},
+					-- Patterns for specific filetypes
+					-- If a pattern is missing, *open a PR* so everyone can benefit.
+					tex = {
+						"chapter",
+						"section",
+						"subsection",
+						"subsubsection",
+					},
+					haskell = {
+						"adt",
+					},
+					rust = {
+						"impl_item",
+					},
+					terraform = {
+						"block",
+						"object_elem",
+						"attribute",
+					},
+					scala = {
+						"object_definition",
+					},
+					vhdl = {
+						"process_statement",
+						"architecture_body",
+						"entity_declaration",
+					},
+					markdown = {
+						"section",
+					},
+					elixir = {
+						"anonymous_function",
+						"arguments",
+						"block",
+						"do_block",
+						"list",
+						"map",
+						"tuple",
+						"quoted_content",
+					},
+					json = {
+						"pair",
+					},
+					typescript = {
+						"export_statement",
+					},
+					yaml = {
+						"block_mapping_pair",
+					},
+				},
+				exact_patterns = {
+					-- Example for a specific filetype with Lua patterns
+					-- Treat patterns.rust as a Lua pattern (i.e "^impl_item$" will
+					-- exactly match "impl_item" only)
+					-- rust = true,
+				},
+
+				-- [!] The options below are exposed but shouldn't require your attention,
+				--     you can safely ignore them.
+
+				zindex = 20, -- The Z-index of the context window
+				mode = "topline", -- Line used to calculate context. Choices: 'cursor', 'topline'
+				-- Separator between context and content. Should be a single character string, like '-'.
+				-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+				separator = nil,
+			})
+		end,
+	})
 
 	-- Git
-	use {
-		'lewis6991/gitsigns.nvim',
+	use({
+		"lewis6991/gitsigns.nvim",
 		config = function()
-			require('gitsigns').setup(require "user.gitsigns")
-		end
-	}
-	use {
-		'f-person/git-blame.nvim',
+			require("gitsigns").setup(require("user.gitsigns"))
+		end,
+	})
+	use({
+		"f-person/git-blame.nvim",
 		config = function()
-			vim.g.gitblame_date_format = '%x'
-		end
-	}
+			vim.g.gitblame_date_format = "%x"
+		end,
+	})
 
 	-- Start page
-	use {
+	use({
 		"startup-nvim/startup.nvim",
 		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 		config = function()
-			require "startup".setup(require "user.startup")
-		end
-	}
+			require("startup").setup(require("user.startup"))
+		end,
+	})
 	-- Trouble
-	use { "folke/trouble.nvim",
+	use({
+		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
 		config = function()
-			require("trouble").setup(require "user.trouble")
-		end
-	}
-
-	-- Go
-	use { "fatih/vim-go" }
+			require("trouble").setup(require("user.trouble"))
+		end,
+	})
 
 	-- Formatting
-	use { "mhartington/formatter.nvim" }
+	use({
+		"mhartington/formatter.nvim",
+		config = function()
+			require("user.formatter")
+		end,
+	})
 
 	-- Run Config
-	use "~/personal/projects/runconfig.nvim"
+	use("~/personal/projects/runconfig.nvim")
 
 	-- Sessions
-	use { 'rmagatti/auto-session',
+	use({
+		"rmagatti/auto-session",
 		config = function()
-			require("auto-session").setup {
+			require("auto-session").setup({
 				log_level = "error",
 				auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-			}
-		end
-	}
+			})
+		end,
+	})
 
 	-- Tests
-	use {
+	use({
 		"nvim-neotest/neotest",
 		requires = {
 			"nvim-lua/plenary.nvim",
@@ -322,7 +507,7 @@ return packer.startup(function(use)
 				virtual_text = {
 					format = function(diagnostic)
 						local message =
-						diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+							diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
 						return message
 					end,
 				},
@@ -334,7 +519,25 @@ return packer.startup(function(use)
 				},
 			})
 		end,
-	}
+	})
+	-- Git
+	use({
+		"TimUntersberger/neogit",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("neogit").setup({})
+		end,
+	})
+
+	-- Notify
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			require("notify").setup({})
+			vim.notify = require("notify")
+			require("telescope").load_extension("notify")
+		end,
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

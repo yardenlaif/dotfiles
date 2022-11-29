@@ -59,3 +59,5 @@ vim.keymap.set('n', '<C-t>s', "<cmd>TestSuite<CR>")
 vim.keymap.set('n', '<C-t>l', "<cmd>TestLast<CR>")
 vim.keymap.set('n', '<C-t>v', "<cmd>TestVisit<CR>")
 
+-- Copy to clipboard
+vim.keymap.set('v', '<C-c>', '"*y"')

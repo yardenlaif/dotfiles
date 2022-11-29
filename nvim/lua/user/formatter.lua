@@ -12,7 +12,7 @@ require("formatter").setup {
     -- Formatter configurations for filetype "lua" go here
     -- and will be executed in order
     go = {
-	    require("formatter.filetypes.go").gofumpt,
+	    require("formatter.filetypes.go").gofmt,
 	    require("formatter.filetypes.go").goimports,
     },
 

@@ -14,4 +14,3 @@ autocmd BufWritePost plugins.lua PackerSync
 augroup end
 ]])
 
--- vim.cmd [[autocmd BufLeave * lua vim.lsp.buf.format { async = true }]]

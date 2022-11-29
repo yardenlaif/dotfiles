@@ -41,20 +41,11 @@ function Surround_with_input()
 		end
 	end
 
-	local start_input = ""
-	local end_input = ""
-	local char = vim.call("getchar")
-	while char ~= 27 do
-		local asciichar = vim.call("nr2char", char)
-		if string.len(start_input) == 0 and asciichar == '<' then
-			end_input = "</"
-		else
-			end_input = end_input .. asciichar
-		end
-		start_input = start_input .. asciichar
-		char = vim.call("getchar")
+	local start_input = vim.fn.input("Surround with> ", "")
+	local end_input = start_input
+	if string.find(end_input, "<") == 1 then
+		end_input = '</' .. string.sub(end_input, 2)
 	end
-
 	Surround_with(start_input, end_input)
 end
 
