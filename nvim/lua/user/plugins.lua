@@ -284,21 +284,20 @@ return packer.startup(function(use)
 	use({ "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" })
 
 	-- Telescope
-	use({ "nvim-telescope/telescope.nvim", commit = "76ea9a898d3307244dce3573392dcf2cc38f340f" })
+	use({ "nvim-telescope/telescope.nvim" })
 	use({
 		"nvim-telescope/telescope-file-browser.nvim",
 		config = function()
 			require("telescope").load_extension("file_browser")
 			require("telescope").load_extension("frecency")
+			require("telescope").load_extension("project")
 		end,
 	})
 	use({
 		"nvim-telescope/telescope-frecency.nvim",
-		config = function()
-			require("telescope").load_extension("frecency")
-		end,
 		requires = { "kkharji/sqlite.lua" },
 	})
+	use({ "nvim-telescope/telescope-project.nvim" })
 
 	-- Treesitter
 	use({

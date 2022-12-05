@@ -42,7 +42,7 @@ require("lspconfig")["cssls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 })
-require("lspconfig")["clangd"].setup({
+require("lspconfig")["ccls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 })

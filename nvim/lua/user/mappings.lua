@@ -45,6 +45,7 @@ keymap("n", "<C-g>b", "<cmd>Gitsigns stage_buffer<CR>", opts)
 keymap("n", "<C-g>a", "<cmd>Gitsigns stage_hunk<CR>", opts)
 keymap("n", "<C-g>c", "<cmd>Neogit kind=float commit<CR>", opts)
 keymap("n", "<C-g>g", "<cmd>Neogit kind=float<CR>", opts)
+keymap("n", "<C-g>p", "<cmd>!git push<CR>", opts)
 
 -- Comment in visual mode
 keymap("x", "<C-_>", "<Plug>Commentary<CR>", opts)
