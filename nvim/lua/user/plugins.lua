@@ -144,14 +144,14 @@ return packer.startup(function(use)
 	use({
 		"hrsh7th/nvim-cmp",
 		config = function()
-			require("cmp").setup({})
+			require("user.cmp")
 		end,
 	}) -- The completion plugin
 	use({ "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }) -- buffer completions
 	use({ "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }) -- path completions
 	use({ "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" }) -- snippet completions
-	use({ "hrsh7th/cmp-nvim-lsp", commit = "3cf38d9c957e95c397b66f91967758b31be4abe6" })
-	use({ "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" })
+	use({ "hrsh7th/cmp-nvim-lsp" })
+	use({ "hrsh7th/cmp-nvim-lua" })
 
 	-- Comment Toggle
 	use({ "tpope/vim-commentary" })
@@ -168,6 +168,13 @@ return packer.startup(function(use)
 			require("user.lsp")
 		end,
 	}) -- enable LSP
+	use({
+		"ranjithshegde/ccls.nvim",
+		config = function()
+			require("ccls").setup(config)
+		end,
+	})
+
 	use({
 		"SmiteshP/nvim-navic",
 		requires = "neovim/nvim-lspconfig",
@@ -214,7 +221,20 @@ return packer.startup(function(use)
 	use({ "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" })
 	use({ "jose-elias-alvarez/null-ls.nvim" })
 	-- for formatters and linters
-	use({ "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" })
+	use({
+		"RRethy/vim-illuminate",
+		config = function()
+			-- default configuration
+			require("illuminate").configure({
+				-- providers: provider used to get references in the buffer, ordered by priority
+				providers = {
+					"lsp",
+					"treesitter",
+					"regex",
+				},
+			})
+		end,
+	})
 	use({ "williamboman/nvim-lsp-installer" })
 	-- LSP Progress
 	use({
@@ -284,62 +304,37 @@ return packer.startup(function(use)
 	use({ "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" })
 
 	-- Telescope
-	use({ "nvim-telescope/telescope.nvim" })
 	use({
-		"nvim-telescope/telescope-file-browser.nvim",
+		"nvim-telescope/telescope.nvim",
 		config = function()
-			require("telescope").load_extension("file_browser")
-			require("telescope").load_extension("frecency")
 			require("telescope").load_extension("project")
+			require("telescope").load_extension("aerial")
+			require("telescope").load_extension("fzf")
 		end,
 	})
-	use({
-		"nvim-telescope/telescope-frecency.nvim",
-		requires = { "kkharji/sqlite.lua" },
-	})
 	use({ "nvim-telescope/telescope-project.nvim" })
+	use({
+		"nvim-telescope/telescope-fzf-native.nvim",
+		run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+	})
+
+	-- Outline
+	use({
+		"stevearc/aerial.nvim",
+		config = function()
+			require("aerial").setup()
+		end,
+	})
+
+	-- FZF
+	use({ "junegunn/fzf", run = ":call fzf#install()" })
+	use({ "junegunn/fzf.vim" })
 
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				-- A list of parser names, or "all"
-				ensure_installed = { "lua", "go", "java", "c", "cpp", "yaml", "dockerfile", "cmake", "markdown" },
-
-				-- Install parsers synchronously (only applied to `ensure_installed`)
-				sync_install = false,
-
-				-- Automatically install missing parsers when entering buffer
-				-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-				auto_install = true,
-
-				-- List of parsers to ignore installing (for "all")
-				ignore_install = { "javascript" },
-
-				---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-				-- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-				highlight = {
-					-- `false` will disable the whole extension
-					enable = true,
-
-					-- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-					disable = function(lang, buf)
-						local max_filesize = 100 * 1024 -- 100 KB
-						local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-						if ok and stats and stats.size > max_filesize then
-							return true
-						end
-					end,
-
-					-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-					-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-					-- Using this option may slow down your editor, and you may see some duplicate highlights.
-					-- Instead of true it can also be a list of languages
-					additional_vim_regex_highlighting = false,
-				},
-			})
+			require("user.treesitter")
 		end,
 	})
 	use({
@@ -450,6 +445,7 @@ return packer.startup(function(use)
 			vim.g.gitblame_date_format = "%x"
 		end,
 	})
+	use({ "tpope/vim-fugitive" })
 
 	-- Start page
 	use({
@@ -477,7 +473,7 @@ return packer.startup(function(use)
 	})
 
 	-- Run Config
-	use("~/personal/projects/runconfig.nvim")
+	use("~/projects/runconfig.nvim")
 
 	-- Sessions
 	use({
@@ -537,6 +533,21 @@ return packer.startup(function(use)
 			require("telescope").load_extension("notify")
 		end,
 	})
+
+	-- Debugging
+	use({
+		"mfussenegger/nvim-dap",
+		config = function()
+			require("user.dap")
+		end,
+	})
+	use({ "leoluz/nvim-dap-go", requires = "mfussenegger/nvim-dap" })
+
+	-- Stickybuf
+	use({ "stevearc/stickybuf.nvim" })
+
+	-- Undotree
+	use({ "mbbill/undotree" })
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

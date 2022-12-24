@@ -1,4 +1,4 @@
-vim.opt.undodir = '/Users/yarden/.config/undo/'
+vim.opt.undodir = "/home/yarden/.undo"
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.signcolumn = "yes"
@@ -11,3 +11,10 @@ vim.opt.cursorlineopt = "number"
 vim.opt.cursorline = true
 vim.api.nvim_command("set noswapfile")
 vim.api.nvim_command("set termguicolors")
+vim.opt.complete = "t"
+vim.opt.completeopt = "menu,menuone,noselect"
+
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+
+vim.opt.scrolloff = 8

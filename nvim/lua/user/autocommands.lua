@@ -2,7 +2,7 @@
 vim.cmd([[
 augroup nvim_config_save
 autocmd!
-autocmd BufWritePost /Users/yarden/.config/nvim/* source <afile>
+autocmd BufWritePost /home/yarden/.config/nvim/* source <afile>
 augroup end
 ]])
 
@@ -13,4 +13,3 @@ autocmd!
 autocmd BufWritePost plugins.lua PackerSync
 augroup end
 ]])
-
