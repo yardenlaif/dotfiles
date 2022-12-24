@@ -43,20 +43,34 @@ function Surround_with_input()
 
 	local start_input = vim.fn.input("Surround with> ", "")
 	local end_input = start_input
-	if string.find(end_input, "<") == 1 then
-		end_input = '</' .. string.sub(end_input, 2)
+	if string.find(end_input, "<") == 1 and string.find(end_input, ">") == string.len(end_input) then
+		end_input = "</" .. string.sub(end_input, 2)
+	end
+	if string.len(end_input) == 1 then
+		if end_input == "<" then
+			end_input = ">"
+		end
+		if end_input == "(" then
+			end_input = ")"
+		end
+		if end_input == "{" then
+			end_input = "}"
+		end
+		if end_input == "[" then
+			end_input = "]"
+		end
 	end
 	Surround_with(start_input, end_input)
 end
 
-vim.keymap.set('v', '(', ":lua Surround_with('(', ')')<CR>", opts)
-vim.keymap.set('x', ')', ":lua Surround_with('( ', ' )')<CR>", opts)
-vim.keymap.set('x', '[', ":lua Surround_with('[', ']')<CR>", opts)
-vim.keymap.set('x', ']', ":lua Surround_with('[ ', ' ]')<CR>", opts)
-vim.keymap.set('x', '"', ":lua Surround_with('\"', '\"')<CR>", opts)
-vim.keymap.set('x', '\'', ":lua Surround_with('\'', '\'')<CR>", opts)
-vim.keymap.set('x', '{', ":lua Surround_with('{', '}')<CR>", opts)
-vim.keymap.set('x', '}', ":lua Surround_with('{ ', ' }')<CR>", opts)
-vim.keymap.set('x', '<', ":lua Surround_with('<', '>')<CR>", opts)
-vim.keymap.set('x', '>', ":lua Surround_with('< ', ' >')<CR>", opts)
-vim.keymap.set('x', 'S', ":lua Surround_with_input()<CR>", opts)
+vim.keymap.set("v", "(", ":lua Surround_with('(', ')')<CR>", opts)
+vim.keymap.set("x", ")", ":lua Surround_with('( ', ' )')<CR>", opts)
+vim.keymap.set("x", "[", ":lua Surround_with('[', ']')<CR>", opts)
+vim.keymap.set("x", "]", ":lua Surround_with('[ ', ' ]')<CR>", opts)
+vim.keymap.set("x", '"', ":lua Surround_with('\"', '\"')<CR>", opts)
+vim.keymap.set("x", "'", ":lua Surround_with(''', ''')<CR>", opts)
+vim.keymap.set("x", "{", ":lua Surround_with('{', '}')<CR>", opts)
+vim.keymap.set("x", "}", ":lua Surround_with('{ ', ' }')<CR>", opts)
+-- vim.keymap.set('x', '<', ":lua Surround_with('<', '>')<CR>", opts)
+-- vim.keymap.set('x', '>', ":lua Surround_with('< ', ' >')<CR>", opts)
+vim.keymap.set("x", "S", ":lua Surround_with_input()<CR>", opts)
