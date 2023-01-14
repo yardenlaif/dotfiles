@@ -32,7 +32,7 @@ cmp.setup({
 		end, { "i", "s" }),
 		["<C-Space>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
-				cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+				cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
 			else
 				fallback()
 			end
@@ -47,6 +47,11 @@ cmp.setup({
 	experimental = {
 		ghost_text = true,
 	},
+})
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+require("lspconfig").cssls.setup({
+	capabilities = capabilities,
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).

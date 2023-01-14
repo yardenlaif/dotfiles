@@ -1,15 +1,16 @@
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
+  exec tmux -u -2
 fi
 
+plugins=(git sdk golang)
+
 function trySource {
-	if [ -f $1 ]
+	if [ -f "$1" ]
 	then
 		source $1
 	fi
 }
 
-export PATH=$HOME/.nuget/NuGet:/usr/local/share/dotnet:$PATH
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 
@@ -23,8 +24,13 @@ if [ -f "/usr/local/bin/kubectl" ]; then source <(kubectl completion zsh); fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+export PATH=$HOME/.nuget/NuGet:/usr/local/share/dotnet:$PATH
+export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$HOME/go/bin:$PATH"
+export LC_ALL='en_IN.UTF-8'
+export LANG="en_IN.UTF-8"
+export TERM="tmux-256color"
 
-# Yarden Configuration
+
 # Rust
 if [ -f "$HOME/.cargo/env" ];
 then
@@ -43,12 +49,13 @@ alias edittmux="vim ~/.tmux.conf && tmux source-file ~/.tmux.conf"
 
 export GCM_CREDENTIAL_STORE=plaintext
 
-if [ `uname -s` = "Linux" ]
+if [ $(uname -s) = "Linux" ]
 then
 	function copyfile {
 		cat $argv[1] | xclip -selection clipboard
 	}
-elif [ `uname -s` = "Darwin" ]
+elif [ $(uname -s) = "Darwin" ]
+then
 	function copyfile { cat $1 | pbcopy }
 	function netpid() {
 		lsof -n -i4TCP:$1
@@ -63,3 +70,43 @@ function gh-action {
 }
 
 trySource $HOME/.rookout_env
+
+
+# Download Znap, if it's not there yet.
+[[ -f ~/.config/zsh/zsh-snap/znap.zsh ]] ||
+    git clone --depth 1 -- \
+        https://github.com/marlonrichert/zsh-snap.git ~/Git/zsh-snap
+
+source ~/.config/zsh/zsh-snap/znap.zsh  # Start Znap
+
+# `znap prompt` makes your prompt visible in just 15-40ms!
+znap prompt sindresorhus/pure
+
+# `znap source` automatically downloads and starts your plugins.
+znap source marlonrichert/zsh-autocomplete
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
+
+alias cat="batcat"
+alias bgrep="batgrep"
+
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+unsetopt share_history
+
+source ~/.sensitiverc
+
+zstyle ':autocomplete:*' insert-unambiguous yes
+# no:  Tab inserts the top completion.
+# yes: Tab first inserts a substring common to all listed completions, if any.
+
+zstyle ':autocomplete:*' fzf-completion yes
+# no:  Tab uses Zsh's completion system only.
+# yes: Tab first tries Fzf's completion, then falls back to Zsh's.
+# ⚠️ NOTE: This setting can NOT be changed at runtime and requires that you
+# have installed Fzf's shell extensions.
+zstyle ':autocomplete:*' widget-style menu-select
+# complete-word: (Shift-)Tab inserts the top (bottom) completion.
+# menu-complete: Press again to cycle to next (previous) completion.
+# menu-select:   Same as `menu-complete`, but updates selection in menu.
+# ⚠️ NOTE: This setting can NOT be changed at runtime.

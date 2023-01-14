@@ -1,4 +1,4 @@
-settings = {
+local settings = {
 	position = "bottom", -- position of the list can be: bottom, top, left, right
 	height = 10, -- height of the trouble list when position is top or bottom
 	width = 50, -- width of the list when position is left or right
@@ -27,7 +27,7 @@ settings = {
 		open_folds = { "zR", "zr" }, -- open all folds
 		toggle_fold = { "zA", "za" }, -- toggle fold of current file
 		previous = "k", -- previous item
-		next = "j" -- next item
+		next = "j", -- next item
 	},
 	indent_lines = true, -- add an indent guide below the fold icons
 	auto_open = false, -- automatically open the list when you have diagnostics
@@ -41,9 +41,22 @@ settings = {
 		warning = "",
 		hint = "",
 		information = "",
-		other = "﫠"
+		other = "﫠",
 	},
-	use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
+	use_diagnostic_signs = true, -- enabling this will use the signs defined in your lsp client
 }
+
+local trouble = require("trouble.providers.telescope")
+
+local telescope = require("telescope")
+
+telescope.setup({
+	defaults = {
+		mappings = {
+			i = { ["<Space><Space>"] = trouble.open_with_trouble },
+			n = { ["<<Space><Space>"] = trouble.open_with_trouble },
+		},
+	},
+})
 
 return settings

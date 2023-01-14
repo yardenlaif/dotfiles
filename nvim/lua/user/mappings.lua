@@ -17,8 +17,10 @@ vim.g.maplocalleader = "'"
 keymap("n", "<leader>f", "<Cmd>Telescope find_files<CR>", opts)
 keymap("n", "<leader>a", "<cmd>Telescope treesitter<cr>", opts)
 keymap("n", "<leader>c", "<cmd>Telescope lsp_incoming_calls<cr>", opts)
+keymap("n", "<leader>i", "<cmd>Telescope lsp_implementations<cr>", opts)
 keymap("n", "<leader>r", "<cmd>Telescope lsp_references<cr>", opts)
 keymap("n", "<C-f>", "<cmd>Telescope live_grep<cr>", opts)
+keymap("x", "<C-f>", "<cmd>Telescope grep_string<cr>", opts)
 keymap("n", "<leader>s", "<cmd>Telescope aerial<cr>", opts)
 
 -- One visual line movement

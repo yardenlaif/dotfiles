@@ -11,7 +11,6 @@ vim.opt.cursorlineopt = "number"
 vim.opt.cursorline = true
 vim.api.nvim_command("set noswapfile")
 vim.api.nvim_command("set termguicolors")
-vim.opt.complete = "t"
 vim.opt.completeopt = "menu,menuone,noselect"
 
 vim.opt.hlsearch = false

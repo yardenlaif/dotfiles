@@ -24,23 +24,6 @@ function Surround_with(start_surround, end_surround)
 end
 
 function Surround_with_input()
-	local vstart = vim.fn.getpos("'<")
-	local vend = vim.fn.getpos("'>")
-	local start_column = vstart[3] - 1
-	local start_line = vstart[2]
-	local end_column = vend[3]
-	local end_line = vend[2]
-
-	-- Skip whitespaces at the start of lines
-	if start_column == 0 then
-		vim.api.nvim_win_set_cursor(0, { start_line, start_column })
-		local char = vim.api.nvim_get_current_line():sub(start_column + 1, start_column + 1)
-		while char == " " or char == "\t" do
-			start_column = start_column + 1
-			char = vim.api.nvim_get_current_line():sub(start_column + 1, start_column + 1)
-		end
-	end
-
 	local start_input = vim.fn.input("Surround with> ", "")
 	local end_input = start_input
 	if string.find(end_input, "<") == 1 and string.find(end_input, ">") == string.len(end_input) then

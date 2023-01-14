@@ -60,10 +60,12 @@ require("lspconfig")["cssls"].setup({
 	flags = lsp_flags,
 	capabilities = capabilities,
 })
-require("lspconfig")["ccls"].setup({
+local clangdCapabilities = capabilities
+clangdCapabilities.offsetEncoding = { "utf-16" }
+require("lspconfig")["clangd"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
-	capabilities = capabilities,
+	capabilities = clangdCapabilities,
 })
 require("lspconfig")["asm_lsp"].setup({
 	on_attach = on_attach,
@@ -71,11 +73,6 @@ require("lspconfig")["asm_lsp"].setup({
 	capabilities = capabilities,
 })
 require("lspconfig")["html"].setup({
-	on_attach = on_attach,
-	flags = lsp_flags,
-	capabilities = capabilities,
-})
-require("lspconfig")["emmet_ls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 	capabilities = capabilities,
@@ -105,6 +102,11 @@ require("lspconfig")["grammarly"].setup({
 	capabilities = capabilities,
 })
 require("lspconfig")["jsonls"].setup({
+	on_attach = on_attach,
+	flags = lsp_flags,
+	capabilities = capabilities,
+})
+require("lspconfig")["omnisharp"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 	capabilities = capabilities,
