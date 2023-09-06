@@ -2,7 +2,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
   exec tmux -u -2
 fi
 
-plugins=(git sdk golang)
+plugins=(git sdk golang asdf)
 
 function trySource {
 	if [ -f "$1" ]
@@ -110,3 +110,27 @@ zstyle ':autocomplete:*' widget-style menu-select
 # menu-complete: Press again to cycle to next (previous) completion.
 # menu-select:   Same as `menu-complete`, but updates selection in menu.
 # ⚠️ NOTE: This setting can NOT be changed at runtime.
+
+LESSOPEN="|/usr/local/bin/batpipe %s";
+export LESSOPEN;
+unset LESSCLOSE;
+LESS="$LESS -R";
+BATPIPE="color";
+export LESS;
+export BATPIPE;
+export PATH=$PATH:/home/yarden/.local/share/nvim/lsp_servers/jdtls/bin:/home/yarden/.pyenv/bin:/home/yarden/utils/idea/bin:/home/yarden/utils/protoc-3.11.2/bin/:/home/yarden/.asdf/bin
+alias dis="cstool -d x64"
+
+
+export PYENV_ROOT="$HOME/.pyenv"                                                               
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"                             
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+function rsed {
+	find . -type f -exec sed -i $1 {} +
+}
+export ROOKOUT_LABELS=env:yarden
+export JAVA_11=~/.sdkman/candidates/java/11.0.12-open
+export JAVA_12=~/.sdkman/candidates/java/17.0.6-oracle
+export JAVA_8=~/.sdkman/candidates/java/8.0.302-open
+export JAVA_9=~/.sdkman/candidates/java/11.0.12-open

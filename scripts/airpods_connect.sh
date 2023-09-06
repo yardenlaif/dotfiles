@@ -1,0 +1,1 @@
+/home/yarden/scripts/airpods_connect.sh

@@ -28,13 +28,12 @@ null_ls.setup({
 		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
 		formatting.stylua,
-		diagnostics.golangci_lint,
+		diagnostics.golangci_lint.with({
+			extra_args = { "-mod=readonly" },
+		}),
 		diagnostics.staticcheck,
 		null_ls.builtins.code_actions.refactoring,
 		null_ls.builtins.diagnostics.actionlint,
-		null_ls.builtins.diagnostics.checkstyle.with({
-			extra_args = { "-c", "/google_checks.xml" }, -- or "/sun_checks.xml" or path to self written rules
-		}),
 		null_ls.builtins.diagnostics.cmake_lint,
 		null_ls.builtins.diagnostics.cppcheck.with({
 			extra_args = { "--project=build/compile_commands.json", "-cppcheck-build-dir=.cppcheck" },
@@ -43,7 +42,6 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.revive.with({
 			args = { "-formatter", "json", "-config", "revive.toml", "./..." },
 		}),
-		null_ls.builtins.diagnostics.semgrep,
 		null_ls.builtins.diagnostics.tidy,
 		null_ls.builtins.diagnostics.todo_comments,
 		null_ls.builtins.diagnostics.yamllint,
@@ -59,5 +57,11 @@ null_ls.setup({
 		formatting.gofmt,
 		formatting.goimports,
 		-- diagnostics.flake8
+		-- null_ls.builtins.diagnostics.pmd.with({
+		-- 	extra_args = {
+		-- 		"--rulesets",
+		-- 		"category/java/bestpractices.xml,category/jsp/bestpractices.xml", -- or path to self-written ruleset
+		-- 	},
+		-- }),
 	},
 })

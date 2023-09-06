@@ -30,7 +30,7 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-		["<C-Space>"] = cmp.mapping(function(fallback)
+		["<C-i>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
 			else

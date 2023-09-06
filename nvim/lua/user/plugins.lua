@@ -146,6 +146,7 @@ return packer.startup(function(use)
 		config = function()
 			require("user.cmp")
 		end,
+		commit = "cfafe0a1ca8933f7b7968a287d39904156f2c57d", -- The following commit breaks commandline completion: "53f49c5145d05a53b997d3f647f97e5ac8e9bd5c"
 	}) -- The completion plugin
 	use({ "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }) -- buffer completions
 	use({ "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }) -- path completions
@@ -174,6 +175,55 @@ return packer.startup(function(use)
 			require("ccls").setup(config)
 		end,
 	})
+	-- use({
+	-- 	"mfussenegger/nvim-jdtls",
+	-- 	config = function()
+	-- 		local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+	-- 		local config = {
+	-- 			-- The command that starts the language server
+	-- 			-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
+	-- 			cmd = {
+
+	-- 				-- 💀
+	-- 				"java",
+	-- 				"-Declipse.application=org.eclipse.jdt.ls.core.id1",
+	-- 				"-Dosgi.bundles.defaultStartLevel=4",
+	-- 				"-Declipse.product=org.eclipse.jdt.ls.core.product",
+	-- 				"-Dlog.protocol=true",
+	-- 				"-Dlog.level=ALL",
+	-- 				"-Xms1g",
+	-- 				"--add-modules=ALL-SYSTEM",
+	-- 				"--add-opens",
+	-- 				"java.base/java.util=ALL-UNNAMED",
+	-- 				"--add-opens",
+	-- 				"java.base/java.lang=ALL-UNNAMED",
+
+	-- 				-- 💀
+	-- 				"-jar",
+	-- 				"/home/yarden/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar",
+	-- 				"-configuration",
+	-- 				"/home/yarden/.local/share/nvim/lsp_servers/jdtls/config_linux",
+	-- 				"-data",
+	-- 				"/home/yarden/projects/workspaces/" .. workspace_dir,
+	-- 			},
+
+	-- 			-- 💀
+	-- 			-- This is the default if not provided, you can remove it. Or adjust as needed.
+	-- 			-- One dedicated LSP server & client will be started per unique root_dir
+	-- 			root_dir = require("jdtls.setup").find_root({ "gradlew", "mvnw" }),
+
+	-- 			-- Here you can configure eclipse.jdt.ls specific settings
+	-- 			-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+	-- 			-- for a list of options
+	-- 			settings = {
+	-- 				java = {},
+	-- 			},
+	-- 		}
+	-- 		-- This starts a new client & server,
+	-- 		-- or attaches to an existing client & server depending on the `root_dir`.
+	-- 		require("jdtls").start_or_attach(config)
+	-- 	end,
+	-- })
 
 	use({
 		"SmiteshP/nvim-navic",
@@ -446,6 +496,17 @@ return packer.startup(function(use)
 		end,
 	})
 	use({ "tpope/vim-fugitive" })
+	-- use({
+	-- 	"pwntester/octo.nvim",
+	-- 	requires = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-telescope/telescope.nvim",
+	-- 		"kyazdani42/nvim-web-devicons",
+	-- 	},
+	-- 	config = function()
+	-- 		require("octo").setup()
+	-- 	end,
+	-- })
 
 	-- Start page
 	use({

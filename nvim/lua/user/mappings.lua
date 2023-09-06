@@ -1,4 +1,4 @@
-local opts = { noremap = true, silent = true }
+local opts = { noremap = true, silent = false }
 
 -- Shorten function name
 local keymap = vim.api.nvim_set_keymap
@@ -15,6 +15,7 @@ vim.g.maplocalleader = "'"
 
 -- Telescope
 keymap("n", "<leader>f", "<Cmd>Telescope find_files<CR>", opts)
+keymap("n", "<leader><leader>", "<Cmd>Telescope resume<CR>", opts)
 keymap("n", "<leader>a", "<cmd>Telescope treesitter<cr>", opts)
 keymap("n", "<leader>c", "<cmd>Telescope lsp_incoming_calls<cr>", opts)
 keymap("n", "<leader>i", "<cmd>Telescope lsp_implementations<cr>", opts)
@@ -42,6 +43,7 @@ keymap("n", "<C-g>j", "<cmd>Gitsigns next_hunk<CR>", opts)
 keymap("n", "<C-g>k", "<cmd>Gitsigns prev_hunk<CR>", opts)
 keymap("n", "<C-g>d", "<cmd>Gitsigns diffthis<CR>", opts)
 keymap("n", "<C-g>u", "<cmd>Gitsigns reset_hunk<CR>", opts)
+keymap("n", "<C-g>r", "<cmd>Gitsigns reset_buffer<CR>", opts)
 keymap("n", "<C-g>b", "<cmd>Gitsigns stage_buffer<CR>", opts)
 keymap("n", "<C-g>a", "<cmd>Gitsigns stage_hunk<CR>", opts)
 keymap("n", "<C-g>c", "<cmd>Git commit<CR>", opts)
@@ -53,10 +55,30 @@ keymap("n", "<C-_>", "<cmd>Commentary<CR>", opts)
 keymap("i", "<C-_>", "<cmd>Commentary<CR>", opts)
 
 -- Diagnostics
-vim.keymap.set("n", "<C-e>s", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "<C-e>k", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "<C-e>j", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<C-e>l", vim.diagnostic.setloclist, opts)
+vim.keymap.set(
+	"n",
+	"<C-e>s",
+	"<cmd>lua vim.diagnostic.open_float { severity = vim.diagnostic.severity.ERROR }<CR>",
+	opts
+)
+vim.keymap.set(
+	"n",
+	"<C-e>k",
+	"<cmd>lua vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR }<CR>",
+	opts
+)
+vim.keymap.set(
+	"n",
+	"<C-e>j",
+	"<cmd>lua vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR }<CR>",
+	opts
+)
+vim.keymap.set(
+	"n",
+	"<C-e>l",
+	"<cmd>lua vim.diagnostic.setloclist { severity = vim.diagnostic.severity.ERROR }<CR>",
+	opts
+)
 
 -- Tests
 vim.keymap.set("n", "<C-t>n", "<cmd>TestNearest<CR>")
