@@ -2,7 +2,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
   exec tmux -u -2
 fi
 
-plugins=(git sdk golang asdf)
+plugins=(git sdk golang asdf vi-mode)
 
 function trySource {
 	if [ -f "$1" ]
@@ -134,3 +134,5 @@ export JAVA_11=~/.sdkman/candidates/java/11.0.12-open
 export JAVA_12=~/.sdkman/candidates/java/17.0.6-oracle
 export JAVA_8=~/.sdkman/candidates/java/8.0.302-open
 export JAVA_9=~/.sdkman/candidates/java/11.0.12-open
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"

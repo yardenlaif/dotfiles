@@ -289,6 +289,7 @@ return packer.startup(function(use)
 	-- LSP Progress
 	use({
 		"j-hui/fidget.nvim",
+		tag = "legacy",
 		config = function()
 			require("fidget").setup({})
 		end,
@@ -359,7 +360,6 @@ return packer.startup(function(use)
 		config = function()
 			require("telescope").load_extension("project")
 			require("telescope").load_extension("aerial")
-			require("telescope").load_extension("fzf")
 		end,
 	})
 	use({ "nvim-telescope/telescope-project.nvim" })
@@ -605,7 +605,12 @@ return packer.startup(function(use)
 	use({ "leoluz/nvim-dap-go", requires = "mfussenegger/nvim-dap" })
 
 	-- Stickybuf
-	use({ "stevearc/stickybuf.nvim" })
+	use({
+		"stevearc/stickybuf.nvim",
+		config = function()
+			require("stickybuf").setup()
+		end,
+	})
 
 	-- Undotree
 	use({ "mbbill/undotree" })
