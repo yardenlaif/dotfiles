@@ -70,6 +70,7 @@
 # echo
 # echo
 # echo "What Now?"
+# echo "	* Set git email and username"
 # echo "	* Create github GHP key and place it in GITHUB_GHP_KEY environment variable (in ~/.sensitiverc)"
 # echo "    * Install WebApp manager: http://packages.linuxmint.com/pool/main/w/webapp-manager/"
 # echo "    * Add startup applications"
