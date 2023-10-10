@@ -6,7 +6,7 @@
 # ln -s "$PWD"/kitty/ ~/.config
 
 # # Install terminal packages
-# sudo apt install kitty vim tmux zsh bat curl
+# sudo apt install kitty vim tmux zsh bat curl xclip net-tools
 # sudo snap install nvim --classic
 
 # # Install Rust
@@ -23,6 +23,10 @@
 # asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 # asdf install nodejs latest
 # asdf global nodejs latest
+
+# # Install Java
+# curl -s "https://get.sdkman.io" | bash
+# source "~/.sdkman/bin/sdkman-init.sh"
 
 # # Install pip
 # cd /tmp
@@ -48,8 +52,48 @@
 # cargo install shellharden
 # ### Go
 # go install golang.org/x/tools/gopls@latest
+# curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)"/bin v1.54.2
+# go install honnef.co/go/tools/cmd/staticcheck@latest
+# go install github.com/mgechev/revive@latest
+# go install golang.org/x/tools/cmd/goimports@latest
 # ### Python
 # curl https://pyenv.run | bash
+# sudo apt install python3.10-venv
+
+# # Docker
+# ## Add Docker's official GPG key:
+# sudo apt-get update
+# sudo apt-get install ca-certificates curl gnupg
+# sudo install -m 0755 -d /etc/apt/keyrings
+# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+# sudo chmod a+r /etc/apt/keyrings/docker.gpg
+# ## Add the repository to Apt sources:
+# echo \
+#   "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+#   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+#   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# sudo apt-get update
+# ## Install docker
+# sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# ## Add current user to docker group
+# sudo groupadd docker
+# sudo usermod -aG docker $USER
+# newgrp docker
+
+# # GCloud
+# sudo apt-get install apt-transport-https ca-certificates gnupg curl sudo
+# sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+# echo "deb [signed-by=/usr/share/keyrings/cloud.google.asc] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+# curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.asc
+# sudo apt-get update && sudo apt-get install google-cloud-cli
+
+# # Kubernetes
+# ## kubectl
+# curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+# sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+# ## minikube
+# curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+# sudo dpkg -i minikube_latest_amd64.deb
 
 # # Zsh themes and plugins
 # mkdir ~/.config/zsh
@@ -64,6 +108,9 @@
 # # Update defaults
 # chsh -s "$(which zsh)"
 # echo 2 | sudo update-alternatives --config x-terminal-emulator
+
+# # For Rookout
+# sudo apt install -y fuse libffi-dev zlib1g-dev libedit-dev libc++-13-dev libc++abi-13-dev
 
 # # Further instructions
 # echo

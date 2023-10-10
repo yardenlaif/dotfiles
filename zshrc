@@ -72,6 +72,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
+source $HOME/.yardenrc
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -100,7 +101,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-source $HOME/.yardenrc
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/yarden/.sdkman"
+[[ -s "/home/yarden/.sdkman/bin/sdkman-init.sh" ]] && source "/home/yarden/.sdkman/bin/sdkman-init.sh"

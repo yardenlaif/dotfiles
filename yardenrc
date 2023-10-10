@@ -2,7 +2,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
   exec tmux -u -2
 fi
 
-plugins=(git sdk golang asdf vi-mode)
+plugins=(git sdk golang asdf)
 
 function trySource {
 	if [ -f "$1" ]
@@ -96,7 +96,7 @@ unsetopt share_history
 
 source ~/.sensitiverc
 
-zstyle ':autocomplete:*' insert-unambiguous yes
+zstyle ':autocomplete:*' insert-unambiguous no
 # no:  Tab inserts the top completion.
 # yes: Tab first inserts a substring common to all listed completions, if any.
 
@@ -105,7 +105,7 @@ zstyle ':autocomplete:*' fzf-completion yes
 # yes: Tab first tries Fzf's completion, then falls back to Zsh's.
 # ⚠️ NOTE: This setting can NOT be changed at runtime and requires that you
 # have installed Fzf's shell extensions.
-zstyle ':autocomplete:*' widget-style menu-select
+zstyle ':autocomplete:*' widget-style complete-word
 # complete-word: (Shift-)Tab inserts the top (bottom) completion.
 # menu-complete: Press again to cycle to next (previous) completion.
 # menu-select:   Same as `menu-complete`, but updates selection in menu.
@@ -134,5 +134,13 @@ export JAVA_11=~/.sdkman/candidates/java/11.0.12-open
 export JAVA_12=~/.sdkman/candidates/java/17.0.6-oracle
 export JAVA_8=~/.sdkman/candidates/java/8.0.302-open
 export JAVA_9=~/.sdkman/candidates/java/11.0.12-open
+export JAVA_HOME_11=~/.sdkman/candidates/java/11.0.12-open
+export JAVA_HOME_12=~/.sdkman/candidates/java/17.0.6-oracle
+export JAVA_HOME_17=~/.sdkman/candidates/java/17.0.6-oracle
+export JAVA_HOME_8=~/.sdkman/candidates/java/8.0.302-open
+export JAVA_HOME_9=~/.sdkman/candidates/java/11.0.12-open
+export JAVA_HOME_21=~/.sdkman/candidates/java/21-open
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/completions/asdf.bash"
+setopt NO_BEEP
+export PRESET=linux-x86-64-debug
