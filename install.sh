@@ -5,6 +5,9 @@
 # ln -s "$PWD"/yardenrc ~/.yardenrc
 # ln -s "$PWD"/kitty/ ~/.config
 
+# # Git configuration
+# git config --global core.editor "vim"
+
 # # Install terminal packages
 # sudo apt install kitty vim tmux zsh bat curl xclip net-tools
 # sudo snap install nvim --classic
@@ -59,6 +62,14 @@
 # ### Python
 # curl https://pyenv.run | bash
 # sudo apt install python3.10-venv
+# ### Java
+# wget https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.29.0/jdt-language-server-1.29.0-202310261436.tar.gz -O jdtls.tar.gz
+# mkdir /opt/jdtls
+# sudo tar -xvf jdtls.tar.gz -C /opt/jdtls
+# sudo cp jdt-langauge-server
+# sudo apt install clang-format
+# ### C
+# sudo apt install clangd
 
 # # Docker
 # ## Add Docker's official GPG key:

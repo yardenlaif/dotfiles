@@ -108,3 +108,10 @@ source $ZSH/oh-my-zsh.sh
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/yarden/.sdkman"
 [[ -s "/home/yarden/.sdkman/bin/sdkman-init.sh" ]] && source "/home/yarden/.sdkman/bin/sdkman-init.sh"
+
+# bun completions
+[ -s "/home/yarden/.bun/_bun" ] && source "/home/yarden/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

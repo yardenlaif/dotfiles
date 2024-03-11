@@ -46,15 +46,6 @@ require("lspconfig")["cmake"].setup({
 	flags = lsp_flags,
 	capabilities = capabilities,
 })
-require("lspconfig")["jdtls"].setup({
-	on_attach = on_attach,
-	flags = lsp_flags,
-	capabilities = capabilities,
-})
--- require("lspconfig")["solargraph"].setup({
--- 	on_attach = on_attach,
--- 	flags = lsp_flags,
--- })
 require("lspconfig")["cssls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -190,3 +181,4 @@ end
 -- end
 
 -- vim.lsp.buf.rename = qf_rename
+-- require("user.lsp.java")

@@ -105,7 +105,7 @@ zstyle ':autocomplete:*' fzf-completion yes
 # yes: Tab first tries Fzf's completion, then falls back to Zsh's.
 # ⚠️ NOTE: This setting can NOT be changed at runtime and requires that you
 # have installed Fzf's shell extensions.
-zstyle ':autocomplete:*' widget-style complete-word
+zstyle ':autocomplete:*' widget-style menu-complete
 # complete-word: (Shift-)Tab inserts the top (bottom) completion.
 # menu-complete: Press again to cycle to next (previous) completion.
 # menu-select:   Same as `menu-complete`, but updates selection in menu.
@@ -118,7 +118,7 @@ LESS="$LESS -R";
 BATPIPE="color";
 export LESS;
 export BATPIPE;
-export PATH=$PATH:/home/yarden/.local/share/nvim/lsp_servers/jdtls/bin:/home/yarden/.pyenv/bin:/home/yarden/utils/idea/bin:/home/yarden/utils/protoc-3.11.2/bin/:/home/yarden/.asdf/bin
+export PATH=$PATH:/opt/jdtls/bin:/home/yarden/.pyenv/bin:/home/yarden/utils/idea/bin:/home/yarden/utils/protoc-3.11.2/bin/:/home/yarden/.asdf/bin
 alias dis="cstool -d x64"
 
 
@@ -140,7 +140,17 @@ export JAVA_HOME_17=~/.sdkman/candidates/java/17.0.6-oracle
 export JAVA_HOME_8=~/.sdkman/candidates/java/8.0.302-open
 export JAVA_HOME_9=~/.sdkman/candidates/java/11.0.12-open
 export JAVA_HOME_21=~/.sdkman/candidates/java/21-open
+export GRADLE_USER_HOME=$GRADLE_HOME
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/completions/asdf.bash"
 setopt NO_BEEP
 export PRESET=linux-x86-64-debug
+export DT_ENABLE_TEST_TRACING_FOR_DEV=true
+export PATH=/opt/cmake-3.18.1-Linux-x86_64/bin:$PATH
+
+function vm() {
+	mv $2 $1
+}
+
+export PATH=$PATH:/home/yarden/projects/dotfiles/scripts/
+
