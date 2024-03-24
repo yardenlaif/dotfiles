@@ -83,7 +83,6 @@ source ~/.config/zsh/zsh-snap/znap.zsh  # Start Znap
 znap prompt sindresorhus/pure
 
 # `znap source` automatically downloads and starts your plugins.
-znap source marlonrichert/zsh-autocomplete
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting
 
@@ -105,7 +104,7 @@ zstyle ':autocomplete:*' fzf-completion yes
 # yes: Tab first tries Fzf's completion, then falls back to Zsh's.
 # ⚠️ NOTE: This setting can NOT be changed at runtime and requires that you
 # have installed Fzf's shell extensions.
-zstyle ':autocomplete:*' widget-style menu-complete
+zstyle ':autocomplete:*' widget-style complete-word
 # complete-word: (Shift-)Tab inserts the top (bottom) completion.
 # menu-complete: Press again to cycle to next (previous) completion.
 # menu-select:   Same as `menu-complete`, but updates selection in menu.
