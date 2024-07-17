@@ -25,7 +25,7 @@ null_ls.setup({
 		end
 	end,
 	sources = {
-		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
+		-- formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
 		formatting.stylua,
 		diagnostics.golangci_lint.with({
@@ -38,7 +38,6 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.cppcheck.with({
 			extra_args = { "--project=build/compile_commands.json", "-cppcheck-build-dir=.cppcheck" },
 		}),
-		null_ls.builtins.diagnostics.markdownlint,
 		null_ls.builtins.diagnostics.revive.with({
 			args = { "-formatter", "json", "-config", "revive.toml", "./..." },
 		}),

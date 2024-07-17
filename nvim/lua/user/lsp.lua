@@ -1,5 +1,4 @@
 local util = require("lspconfig/util")
-require("nvim-lsp-installer")
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 -- Use an on_attach function to only map the following keys
@@ -87,11 +86,11 @@ require("lspconfig")["gopls"].setup({
 	flags = lsp_flags,
 	capabilities = capabilities,
 })
-require("lspconfig")["grammarly"].setup({
-	on_attach = on_attach,
-	flags = lsp_flags,
-	capabilities = capabilities,
-})
+-- require("lspconfig")["grammarly"].setup({
+-- 	on_attach = on_attach,
+-- 	flags = lsp_flags,
+-- 	capabilities = capabilities,
+-- })
 require("lspconfig")["jsonls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -108,25 +107,25 @@ require("lspconfig")["jedi_language_server"].setup({
 	capabilities = capabilities,
 })
 
-require("user.lsp.null-ls")
+-- require("user.lsp.null-ls")
 
-local notify = require("notify")
-vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
-	local client = vim.lsp.get_client_by_id(ctx.client_id)
-	local lvl = ({
-		"ERROR",
-		"WARN",
-		"INFO",
-		"DEBUG",
-	})[result.type]
-	notify({ result.message }, lvl, {
-		title = "LSP | " .. client.name,
-		timeout = 10000,
-		keep = function()
-			return lvl == "ERROR" or lvl == "WARN"
-		end,
-	})
-end
+-- local notify = require("notify")
+-- vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+-- 	local client = vim.lsp.get_client_by_id(ctx.client_id)
+-- 	local lvl = ({
+-- 		"ERROR",
+-- 		"WARN",
+-- 		"INFO",
+-- 		"DEBUG",
+-- 	})[result.type]
+-- notify({ result.message }, lvl, {
+-- 	title = "LSP | " .. client.name,
+-- 	timeout = 10000,
+-- 	keep = function()
+-- 		return lvl == "ERROR" or lvl == "WARN"
+-- 	end,
+-- })
+-- end
 
 -- local function qf_rename()
 -- 	local position_params = vim.lsp.util.make_position_params()

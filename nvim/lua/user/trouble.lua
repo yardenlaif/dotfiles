@@ -47,14 +47,15 @@ local settings = {
 }
 
 local trouble = require("trouble.providers.telescope")
+local tele = require("trouble.sources.telescope")
 
 local telescope = require("telescope")
 
 telescope.setup({
 	defaults = {
 		mappings = {
-			i = { ["<Space><Space>"] = trouble.open_with_trouble },
-			n = { ["<<Space><Space>"] = trouble.open_with_trouble },
+			i = { ["<Space><Space>"] = tele.open },
+			n = { ["<<Space><Space>"] = tele.open },
 		},
 	},
 })

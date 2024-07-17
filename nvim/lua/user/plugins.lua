@@ -1,3 +1,4 @@
+vim.loader.enable()
 local fn = vim.fn
 
 -- Automatically install packer
@@ -33,12 +34,9 @@ packer.init({
 -- Install your plugins here
 return packer.startup(function(use)
 	use({ "pappasam/coc-jedi" })
-	use({ "psf/black" })
-	use({ "wbthomason/packer.nvim", commit = "6afb67460283f0e990d35d229fd38fdc04063e0a" }) -- Have packer manage itself
+	use({ "wbthomason/packer.nvim"}) -- Have packer manage itself
 	use({ "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }) -- Useful lua functions used by lots of plugins
 	use({ "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" }) -- Autopairs, integrates with both cmp and treesitter
-	use({ "numToStr/Comment.nvim", commit = "97a188a98b5a3a6f9b1b850799ac078faa17ab67" })
-	-- use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "4d3a68c41a53add8804f471fcc49bb398fe8de08" }
 	use({ "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" })
 	use({
 		"kyazdani42/nvim-tree.lua",
@@ -46,8 +44,6 @@ return packer.startup(function(use)
 			require("nvim-tree").setup()
 		end,
 	})
-	use({ "akinsho/bufferline.nvim", commit = "83bf4dc7bff642e145c8b4547aa596803a8b4dc4" })
-	use({ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" })
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -132,12 +128,11 @@ return packer.startup(function(use)
 			})
 		end,
 	})
-	use({ "akinsho/toggleterm.nvim", commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" })
-	use({ "ahmedkhalf/project.nvim", commit = "628de7e433dd503e782831fe150bb750e56e55d6" })
-	use({ "lewis6991/impatient.nvim", commit = "b842e16ecc1a700f62adb9802f8355b99b52a5a6" })
-	use({ "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" })
-	use({ "goolord/alpha-nvim", commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" })
-	use({ "folke/which-key.nvim" })
+	use({ "lukas-reineke/indent-blankline.nvim",
+	config = function()
+		 require("ibl").setup()
+	 end
+ })
 
 	-- Colorschemes
 	use({ "sainnhe/gruvbox-material" })
@@ -148,29 +143,16 @@ return packer.startup(function(use)
 		config = function()
 			require("user.cmp")
 		end,
-		commit = "cfafe0a1ca8933f7b7968a287d39904156f2c57d", -- The following commit breaks commandline completion: "53f49c5145d05a53b997d3f647f97e5ac8e9bd5c"
 	}) -- The completion plugin
-	use({ "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }) -- buffer completions
-	use({ "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }) -- path completions
-	use({ "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" }) -- snippet completions
+	use({ "hrsh7th/cmp-buffer"}) -- buffer completions
+	use({ "hrsh7th/cmp-path"}) -- path completions
 	use({ "hrsh7th/cmp-nvim-lsp" })
 	use({ "hrsh7th/cmp-nvim-lua" })
 
 	-- Comment Toggle
 	use({ "tpope/vim-commentary" })
 
-	-- Snippets
-	use({ "L3MON4D3/LuaSnip", commit = "8f8d493e7836f2697df878ef9c128337cbf2bb84" }) --snippet engine
-	use({ "rafamadriz/friendly-snippets", commit = "2be79d8a9b03d4175ba6b3d14b082680de1b31b1" }) -- a bunch of snippets to use
-
 	-- LSP
-	use({
-		"neovim/nvim-lspconfig",
-		config = function()
-			require("nvim-lsp-installer").setup({})
-			require("user.lsp")
-		end,
-	}) -- enable LSP
 	use({
 		"ranjithshegde/ccls.nvim",
 		config = function()
@@ -223,9 +205,14 @@ return packer.startup(function(use)
 			})
 		end,
 	})
-	use({ "williamboman/mason.nvim", commit = "c2002d7a6b5a72ba02388548cfaf420b864fbc12" }) -- simple to use language server installer
-	use({ "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" })
-	use({ "jose-elias-alvarez/null-ls.nvim" })
+	use {
+    "williamboman/mason.nvim",
+    requires = {"williamboman/mason-lspconfig.nvim", "neovim/nvim-lspconfig" },
+		config = function()
+			require("mason").setup()
+			require("user.lsp")
+		end,
+	}
 	-- for formatters and linters
 	use({
 		"RRethy/vim-illuminate",
@@ -241,7 +228,6 @@ return packer.startup(function(use)
 			})
 		end,
 	})
-	use({ "williamboman/nvim-lsp-installer" })
 	-- LSP Progress
 	use({
 		"j-hui/fidget.nvim",
@@ -442,7 +428,8 @@ return packer.startup(function(use)
 	use({
 		"lewis6991/gitsigns.nvim",
 		config = function()
-			require("gitsigns").setup(require("user.gitsigns"))
+			require("gitsigns").setup({})
+			require("user.gitsigns")
 		end,
 	})
 	use({
@@ -488,9 +475,10 @@ return packer.startup(function(use)
 			require("user.formatter")
 		end,
 	})
+	use({'mfussenegger/nvim-lint'})
 
 	-- Run Config
-	use("~/projects/runconfig.nvim")
+	-- use("~/projects/runconfig.nvim")
 
 	-- Sessions
 	use({
@@ -507,10 +495,9 @@ return packer.startup(function(use)
 	use({
 		"nvim-neotest/neotest",
 		requires = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"antoinemadec/FixCursorHold.nvim",
 			"nvim-neotest/neotest-go",
+			"nvim-neotest/nvim-nio",
+			-- Your other test adapters here
 		},
 		config = function()
 			-- get neotest namespace (api call creates or returns namespace)
@@ -532,6 +519,9 @@ return packer.startup(function(use)
 			})
 		end,
 	})
+	use({'ray-x/go.nvim'})
+use({'ray-x/guihua.lua'})
+
 	-- Git
 	use({
 		"TimUntersberger/neogit",
