@@ -23,6 +23,7 @@ keymap("n", "<leader>r", "<cmd>Telescope lsp_references<cr>", opts)
 keymap("n", "<C-f>", "<cmd>Telescope live_grep<cr>", opts)
 keymap("x", "<C-f>", "<cmd>Telescope grep_string<cr>", opts)
 keymap("n", "<leader>s", "<cmd>Telescope aerial<cr>", opts)
+keymap('n', '<leader>gi', "<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<cr>", opts)
 
 -- One visual line movement
 keymap("n", "j", "gj", opts)

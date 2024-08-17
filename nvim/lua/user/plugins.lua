@@ -129,10 +129,11 @@ return packer.startup(function(use)
 		end,
 	})
 	use({ "lukas-reineke/indent-blankline.nvim",
-	config = function()
-		 require("ibl").setup()
-	 end
- })
+		config = function()
+			require("ibl").setup()
+	 	end
+	})
+	use "sindrets/diffview.nvim"
 
 	-- Colorschemes
 	use({ "sainnhe/gruvbox-material" })
@@ -532,13 +533,14 @@ use({'ray-x/guihua.lua'})
 	})
 
 	-- Debugging
-	use({
-		"mfussenegger/nvim-dap",
-		config = function()
+	use({ "leoluz/nvim-dap-go", requires = "mfussenegger/nvim-dap",
+		config = function ()
 			require("user.dap")
-		end,
+		end
 	})
-	use({ "leoluz/nvim-dap-go", requires = "mfussenegger/nvim-dap" })
+	use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
+	use { "anuvyklack/hydra.nvim" }
+
 
 	-- Stickybuf
 	use({
@@ -573,6 +575,19 @@ use({'ray-x/guihua.lua'})
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
 	})
+
+	use {
+		'edolphin-ydf/goimpl.nvim',
+		requires = {
+			{'nvim-lua/plenary.nvim'},
+			{'nvim-lua/popup.nvim'},
+			{'nvim-telescope/telescope.nvim'},
+			{'nvim-treesitter/nvim-treesitter'},
+		},
+		config = function()
+			require'telescope'.load_extension'goimpl'
+		end,
+	}
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

@@ -137,6 +137,8 @@ export JAVA_HOME_11=~/.sdkman/candidates/java/11.0.12-open
 export JAVA_HOME_12=~/.sdkman/candidates/java/17.0.6-oracle
 export JAVA_HOME_17=~/.sdkman/candidates/java/17.0.6-oracle
 export JAVA_HOME_8=~/.sdkman/candidates/java/8.0.302-open
+export JAVA_HOME_7=~/.sdkman/candidates/java/7.0.352-zulu
+export JAVA_HOME_6=~/.sdkman/candidates/java/6.0.119-zulu
 export JAVA_HOME_9=~/.sdkman/candidates/java/11.0.12-open
 export JAVA_HOME_21=~/.sdkman/candidates/java/21-open
 export GRADLE_USER_HOME=$GRADLE_HOME
@@ -153,3 +155,5 @@ function vm() {
 
 export PATH=$PATH:/home/yarden/projects/dotfiles/scripts/
 
+eval "$(zoxide init zsh)"
+export PATH=/home/yarden/utils/depot_tools:$PATH

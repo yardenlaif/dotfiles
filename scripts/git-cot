@@ -1,0 +1,8 @@
+if [ ! -z "$1" ]; then
+	pattern="git branch --list '*$1*'"
+	echo $pattern
+	branch=$($pattern)
+	echo "branch" $branch
+else
+	echo "Missing commit message"
+fi

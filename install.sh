@@ -11,6 +11,9 @@
 # # Install terminal packages
 # sudo apt install kitty vim tmux zsh bat curl xclip net-tools
 # sudo snap install nvim --classic
+# # Zoxide
+# curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+# eval "$(zoxide init zsh)"
 
 # # Install Rust
 # curl https://sh.rustup.rs -sSf | sh
@@ -59,6 +62,12 @@
 # go install honnef.co/go/tools/cmd/staticcheck@latest
 # go install github.com/mgechev/revive@latest
 # go install golang.org/x/tools/cmd/goimports@latest
+# git clone https://github.com/golang/vscode-go
+# cd ~/go
+# cd vscode-go/extension
+# npm install
+# npm run compile
+# cd -
 # ### Python
 # curl https://pyenv.run | bash
 # sudo apt install python3.10-venv
@@ -70,6 +79,10 @@
 # sudo apt install clang-format
 # ### C
 # sudo apt install clangd
+# ### HTML
+# wget https://github.com/htacg/tidy-html5/releases/download/5.8.0/tidy-5.8.0-Linux-64bit.deb
+# sudo dpkg -i tidy-5.8.0-Linux-64bit.deb
+# rm tidy-5.8.0-Linux-64bit.deb
 
 # # Docker
 # ## Add Docker's official GPG key:

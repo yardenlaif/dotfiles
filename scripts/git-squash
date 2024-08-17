@@ -1,7 +1,4 @@
-if [ ! -z "$1" ]; then
-	git reset --soft "$(git merge-base master HEAD)"
-	git commit -m "$1"
-	git push --force
-else
-	echo "Missing commit message"
-fi
+git stash && \
+git rebase -i origin && \
+git push --force && \
+git stash pop
