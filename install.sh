@@ -83,6 +83,8 @@
 # wget https://github.com/htacg/tidy-html5/releases/download/5.8.0/tidy-5.8.0-Linux-64bit.deb
 # sudo dpkg -i tidy-5.8.0-Linux-64bit.deb
 # rm tidy-5.8.0-Linux-64bit.deb
+# ### asm
+# cargo install asm-lsp
 
 # # Docker
 # ## Add Docker's official GPG key:

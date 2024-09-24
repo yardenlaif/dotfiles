@@ -95,13 +95,6 @@ vim.keymap.set("v", "Y", '"+y"', opts)
 vim.keymap.set("n", "ed", "<cmd>RunConfig default<CR>")
 vim.keymap.set("n", "ee", "<cmd>RerunConfig<CR>")
 
--- Debug
-keymap("n", "<space>i", "<cmd>lua require'dap'.step_into()<CR>", opts)
-keymap("n", "<space>s", "<cmd>lua require'dap'.step_over()<CR>", opts)
-keymap("n", "<space>d", "<cmd>lua require'dap'.repl.toggle()<CR>", opts)
-keymap("n", "<space>b", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
-keymap("n", "<space>r", "<cmd>lua require'dap'.continue()<CR>", opts)
-
 -- Netrw
 keymap("n", "<space>pv", "<cmd>Ex<CR>", opts)
 
