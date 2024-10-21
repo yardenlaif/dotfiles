@@ -156,6 +156,4 @@ function vm() {
 export PATH=$PATH:/home/yarden/projects/dotfiles/scripts/
 
 eval "$(zoxide init zsh)"
-export PATH=/home/yarden/utils/depot_tools:$PATH
-export MODULAR_HOME=/home/yarden/.modular
-export PATH="$HOME/.modular/pkg/packages.modular.com_nightly_mojo/bin:$PATH"
+export PATH=/home/yarden/utils/depot_tools:/home/yarden/utils/lua-language-server/bin:$PATH
