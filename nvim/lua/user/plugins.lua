@@ -157,7 +157,7 @@ return packer.startup(function(use)
 	use({
 		"ranjithshegde/ccls.nvim",
 		config = function()
-			require("ccls").setup(config)
+			require("ccls").setup()
 		end,
 	})
 	use({
@@ -169,41 +169,7 @@ return packer.startup(function(use)
 		requires = "neovim/nvim-lspconfig",
 		config = function()
 			local navic = require("nvim-navic")
-			navic.setup({
-				icons = {
-					File = " ",
-					Module = " ",
-					Namespace = " ",
-					Package = " ",
-					Class = " ",
-					Method = " ",
-					Property = " ",
-					Field = " ",
-					Constructor = " ",
-					Enum = "練",
-					Interface = "練",
-					Function = " ",
-					Variable = " ",
-					Constant = " ",
-					String = " ",
-					Number = " ",
-					Boolean = "◩ ",
-					Array = " ",
-					Object = " ",
-					Key = " ",
-					Null = "ﳠ ",
-					EnumMember = " ",
-					Struct = " ",
-					Event = " ",
-					Operator = " ",
-					TypeParameter = " ",
-				},
-				highlight = false,
-				depth_limit_indicator = "..",
-				safe_output = true,
-				separator = "  ",
-				depth_limit = 3,
-			})
+			navic.setup()
 		end,
 	})
 	use {
@@ -232,7 +198,6 @@ return packer.startup(function(use)
 	-- LSP Progress
 	use({
 		"j-hui/fidget.nvim",
-		tag = "legacy",
 		config = function()
 			require("fidget").setup({})
 		end,
@@ -330,6 +295,10 @@ return packer.startup(function(use)
 			require("user.treesitter")
 		end,
 	})
+	use {
+		"nvim-telescope/telescope-file-browser.nvim",
+		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+	}
 	use({
 		"nvim-treesitter/nvim-treesitter-context",
 		config = function()
@@ -452,14 +421,6 @@ return packer.startup(function(use)
 	-- 	end,
 	-- })
 
-	-- Start page
-	use({
-		"startup-nvim/startup.nvim",
-		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-		config = function()
-			require("startup").setup(require("user.startup"))
-		end,
-	})
 	-- Trouble
 	use({
 		"folke/trouble.nvim",

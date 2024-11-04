@@ -24,6 +24,7 @@ keymap("n", "<C-f>", "<cmd>Telescope live_grep<cr>", opts)
 keymap("x", "<C-f>", "<cmd>Telescope grep_string<cr>", opts)
 keymap("n", "<leader>s", "<cmd>Telescope aerial<cr>", opts)
 keymap('n', '<leader>gi', "<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<cr>", opts)
+keymap('n', '<leader>t', "<cmd>Telescope file_browser<cr>", opts)
 
 -- One visual line movement
 keymap("n", "j", "gj", opts)
@@ -59,25 +60,25 @@ keymap("i", "<C-_>", "<cmd>Commentary<CR>", opts)
 vim.keymap.set(
 	"n",
 	"<C-e>s",
-	"<cmd>lua vim.diagnostic.open_float { severity = vim.diagnostic.severity.ERROR }<CR>",
+	"<cmd>lua vim.diagnostic.open_float { severity = { min = vim.diagnostic.severity.WARN } }<CR>",
 	opts
 )
 vim.keymap.set(
 	"n",
 	"<C-e>k",
-	"<cmd>lua vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR }<CR>",
+	"<cmd>lua vim.diagnostic.goto_prev { severity = { min = vim.diagnostic.severity.WARN } }<CR>",
 	opts
 )
 vim.keymap.set(
 	"n",
 	"<C-e>j",
-	"<cmd>lua vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR }<CR>",
+	"<cmd>lua vim.diagnostic.goto_next { severity = { min = vim.diagnostic.severity.WARN } }<CR>",
 	opts
 )
 vim.keymap.set(
 	"n",
 	"<C-e>l",
-	"<cmd>lua vim.diagnostic.setloclist { severity = vim.diagnostic.severity.ERROR }<CR>",
+	"<cmd>lua vim.diagnostic.setloclist { severity = { min = vim.diagnostic.severity.WARN } }<CR>",
 	opts
 )
 

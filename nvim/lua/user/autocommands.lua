@@ -8,10 +8,10 @@ augroup end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd([[
-	augroup packer_user_config
-autocmd!
-autocmd BufWritePost plugins.lua PackerSync
-augroup end
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
 ]])
 
 local augroup = vim.api.nvim_create_augroup
@@ -21,4 +21,3 @@ autocmd("BufWritePost", {
 	group = "__formatter__",
 	command = ":FormatWrite",
 })
-

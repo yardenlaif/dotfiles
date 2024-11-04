@@ -15,10 +15,10 @@ function trySource {
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 
 # The next line updates PATH for the Google Cloud SDK.
-trySource "$HOME/google-cloud-sdk/path.zsh.inc" 
+trySource "$HOME/google-cloud-sdk/path.zsh.inc"
 
 # The next line enables shell command completion for gcloud.
-trySource "$HOME/google-cloud-sdk/completion.zsh.inc" 
+trySource "$HOME/google-cloud-sdk/completion.zsh.inc"
 export PATH=$PATH:/usr/local/opt/binutils/bin
 if [ -f "/usr/local/bin/kubectl" ]; then source <(kubectl completion zsh); fi
 
@@ -117,18 +117,17 @@ LESS="$LESS -R";
 BATPIPE="color";
 export LESS;
 export BATPIPE;
-export PATH=$PATH:/opt/jdtls/bin:/home/yarden/.pyenv/bin:/home/yarden/utils/idea/bin:/home/yarden/utils/protoc-3.11.2/bin/:/home/yarden/.asdf/bin
+export PATH=$PATH:~/utils/jdtls/bin:/home/yarden/.pyenv/bin:/home/yarden/utils/idea/bin:/home/yarden/.asdf/bin
 alias dis="cstool -d x64"
 
 
-export PYENV_ROOT="$HOME/.pyenv"                                                               
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"                             
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 function rsed {
 	find . -type f -exec sed -i $1 {} +
 }
-export ROOKOUT_LABELS=env:yarden
 export JAVA_11=~/.sdkman/candidates/java/11.0.12-open
 export JAVA_12=~/.sdkman/candidates/java/17.0.6-oracle
 export JAVA_8=~/.sdkman/candidates/java/8.0.302-open
@@ -153,7 +152,9 @@ function vm() {
 	mv $2 $1
 }
 
-export PATH=$PATH:/home/yarden/projects/dotfiles/scripts/
+export PATH=$PATH:~/projects/dotfiles/scripts/
 
 eval "$(zoxide init zsh)"
-export PATH=/home/yarden/utils/depot_tools:/home/yarden/utils/lua-language-server/bin:$PATH
+export PATH=~/utils/depot_tools:~/utils/lua-language-server/bin:$PATH
+
+alias diff=nvim -d
