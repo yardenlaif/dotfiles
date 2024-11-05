@@ -1,4 +1,0 @@
-git stash && \
-git rebase -i origin && \
-git push --force && \
-git stash pop
