@@ -152,9 +152,10 @@ function vm() {
 	mv $2 $1
 }
 
-export PATH=$PATH:~/projects/dotfiles/scripts/
+export PATH=$PATH:~/projects/dotfiles/scripts/:~/.local/bin/
 
 eval "$(zoxide init zsh)"
 export PATH=~/utils/depot_tools:~/utils/lua-language-server/bin:$PATH
 
 alias diff=nvim -d
+alias chmox="chmod +x"
