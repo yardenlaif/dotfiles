@@ -146,7 +146,7 @@ export GRADLE_USER_HOME=$GRADLE_HOME
 setopt NO_BEEP
 export PRESET=linux-x86-64-debug
 export DT_ENABLE_TEST_TRACING_FOR_DEV=true
-export PATH=/opt/cmake-3.18.1-Linux-x86_64/bin:$PATH
+export PATH=~/utils/cmake/bin:~/utils/protoc/bin:$PATH
 
 function vm() {
 	mv $2 $1

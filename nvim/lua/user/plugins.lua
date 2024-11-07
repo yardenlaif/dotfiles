@@ -482,7 +482,8 @@ return packer.startup(function(use)
 		end,
 	})
 	use({'ray-x/go.nvim'})
-use({'ray-x/guihua.lua'})
+	use({'ray-x/guihua.lua'})
+	use({'mrcjkb/rustaceanvim'})
 
 	-- Git
 	use({
@@ -549,6 +550,7 @@ use({'ray-x/guihua.lua'})
 			require'telescope'.load_extension'goimpl'
 		end,
 	}
+	use { 'github/copilot.vim' }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

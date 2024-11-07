@@ -1,3 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
 # sudo apt install gcc
 #
 # # Desktop configuration
@@ -40,15 +44,7 @@
 #
 # # Install nvim packages
 # ## General
-# sudo apt install ripgrep fzf
 # ## Language specific
-# ### Lua
-# cargo install stylua
-# cd /tmp
-# wget https://github.com/LuaLS/lua-language-server/releases/download/3.7.0/lua-language-server-3.7.0-linux-x64.tar.gz
-# mkdir ~/utils/lua-language-server
-# tar -xvf lua-language-server-3.7.0-linux-x64.tar.gz -C ~/utils/lua-language-server
-# cd -
 # ### Shell
 # sudo snap install beautysh --classic
 # curl -sS https://webi.sh/shfmt | sh
@@ -81,6 +77,27 @@
 # rm tidy-5.8.0-Linux-64bit.deb
 # ### asm
 # cargo install asm-lsp
+nvim_rust() {
+	rustup component add rust-analyzer
+	cargo install ra-multiplex
+	echo "
+	[Unit]
+	Description=Rust analyzer multiplex server
+
+	[Service]
+	User=$USER
+	Type=simple
+	ExecStart=/home/$USER/.cargo/bin/ra-multiplex server
+	Environment=PATH=/home/$USER/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+	[Install]
+	WantedBy=default.target
+	" > ./ra-mux.service
+	sudo mv ra-mux.service /etc/systemd/system
+	sudo systemctl enable ra-mux.service
+	sudo service ra-mux start
+}
+# nvim_rust
 #
 # # Docker
 # ## Add Docker's official GPG key:
@@ -139,10 +156,14 @@
 # chsh -s "$(which zsh)"
 # echo 2 | sudo update-alternatives --config x-terminal-emulator
 #
-# # Wiz
-# curl -s https://binaries.twingate.com/client/linux/install.sh | sudo bash
-# sudo twingate setup
-# twingate desktop-start
+wiz() {
+	curl -s https://binaries.twingate.com/client/linux/install.sh | sudo bash
+	sudo twingate setup
+	twingate desktop-start
+	sudo apt install lld libelf-dev libssl-dev flex bison clang-15
+	sudo snap install task --classic
+}
+# wiz
 #
 # # Me
 # git config --global user.name "Yarden Laifenfeld"
