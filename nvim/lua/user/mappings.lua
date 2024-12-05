@@ -14,14 +14,14 @@ vim.g.mapleader = "'"
 vim.g.maplocalleader = "'"
 
 -- Telescope
-keymap("n", "<leader>f", "<Cmd>Telescope find_files<CR>", opts)
+keymap("n", "<leader>f", "<Cmd>Telescope menufacture find_files<CR>", opts)
 keymap("n", "<leader><leader>", "<Cmd>Telescope resume<CR>", opts)
 keymap("n", "<leader>a", "<cmd>Telescope treesitter<cr>", opts)
 keymap("n", "<leader>c", "<cmd>Telescope lsp_incoming_calls<cr>", opts)
 keymap("n", "<leader>i", "<cmd>Telescope lsp_implementations<cr>", opts)
 keymap("n", "<leader>r", "<cmd>Telescope lsp_references<cr>", opts)
-keymap("n", "<C-f>", "<cmd>Telescope live_grep<cr>", opts)
-keymap("x", "<C-f>", "<cmd>Telescope grep_string<cr>", opts)
+keymap("n", "<C-f>", "<cmd>Telescope menufacture live_grep<cr>", opts)
+keymap("x", "<C-f>", "<cmd>Telescope menufacture grep_string<cr>", opts)
 keymap("n", "<leader>s", "<cmd>Telescope aerial<cr>", opts)
 keymap('n', '<leader>gi', "<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<cr>", opts)
 keymap('n', '<leader>t', "<cmd>Telescope file_browser<cr>", opts)
@@ -78,7 +78,7 @@ vim.keymap.set(
 vim.keymap.set(
 	"n",
 	"<C-e>l",
-	"<cmd>lua vim.diagnostic.setloclist { severity = { min = vim.diagnostic.severity.WARN } }<CR>",
+	"<cmd>lua vim.diagnostic.setloclist { open = true, severity = { min = vim.diagnostic.severity.WARN } }<CR>",
 	opts
 )
 
@@ -88,6 +88,10 @@ vim.keymap.set("n", "<C-t>f", "<cmd>TestFile<CR>")
 vim.keymap.set("n", "<C-t>s", "<cmd>TestSuite<CR>")
 vim.keymap.set("n", "<C-t>l", "<cmd>TestLast<CR>")
 vim.keymap.set("n", "<C-t>v", "<cmd>TestVisit<CR>")
+
+-- Debug
+vim.keymap.set("n", "<space>r", "<cmd>DapContinue<CR>")
+vim.keymap.set("n", "<space>b", "<cmd>DapToggleBreakpoint<CR>")
 
 -- Copy to clipboard
 vim.keymap.set("v", "Y", '"+y"', opts)
@@ -105,3 +109,6 @@ keymap("n", "<leader>u", "<cmd>UndotreeToggle<CR>", opts)
 -- Search in the middle
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
+
+vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+vim.keymap.set("n", "<space>ca", "<cmd>RustLsp flyCheck<cmd>", opts)

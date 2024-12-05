@@ -34,7 +34,7 @@ packer.init({
 -- Install your plugins here
 return packer.startup(function(use)
 	use({ "pappasam/coc-jedi" })
-	use({ "wbthomason/packer.nvim"}) -- Have packer manage itself
+	use({ "wbthomason/packer.nvim" })                                                  -- Have packer manage itself
 	use({ "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }) -- Useful lua functions used by lots of plugins
 	use({ "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" }) -- Autopairs, integrates with both cmp and treesitter
 	use({ "kyazdani42/nvim-web-devicons" })
@@ -128,10 +128,11 @@ return packer.startup(function(use)
 			})
 		end,
 	})
-	use({ "lukas-reineke/indent-blankline.nvim",
+	use({
+		"lukas-reineke/indent-blankline.nvim",
 		config = function()
 			require("ibl").setup()
-	 	end
+		end
 	})
 	use "sindrets/diffview.nvim"
 
@@ -144,9 +145,9 @@ return packer.startup(function(use)
 		config = function()
 			require("user.cmp")
 		end,
-	}) -- The completion plugin
-	use({ "hrsh7th/cmp-buffer"}) -- buffer completions
-	use({ "hrsh7th/cmp-path"}) -- path completions
+	})                         -- The completion plugin
+	use({ "hrsh7th/cmp-buffer" }) -- buffer completions
+	use({ "hrsh7th/cmp-path" }) -- path completions
 	use({ "hrsh7th/cmp-nvim-lsp" })
 	use({ "hrsh7th/cmp-nvim-lua" })
 
@@ -173,8 +174,8 @@ return packer.startup(function(use)
 		end,
 	})
 	use {
-    "williamboman/mason.nvim",
-    requires = {"williamboman/mason-lspconfig.nvim", "neovim/nvim-lspconfig" },
+		"williamboman/mason.nvim",
+		requires = { "williamboman/mason-lspconfig.nvim", "neovim/nvim-lspconfig" },
 		config = function()
 			require("mason").setup()
 			require("user.lsp")
@@ -268,12 +269,15 @@ return packer.startup(function(use)
 		config = function()
 			require("telescope").load_extension("project")
 			require("telescope").load_extension("aerial")
+			require("telescope").load_extension("menufacture")
 		end,
 	})
+	use { 'molecule-man/telescope-menufacture' }
 	use({ "nvim-telescope/telescope-project.nvim" })
 	use({
 		"nvim-telescope/telescope-fzf-native.nvim",
-		run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+		run =
+		"cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 	})
 
 	-- Outline
@@ -437,7 +441,7 @@ return packer.startup(function(use)
 			require("user.formatter")
 		end,
 	})
-	use({'mfussenegger/nvim-lint'})
+	use({ 'mfussenegger/nvim-lint' })
 
 	-- Run Config
 	-- use("~/projects/runconfig.nvim")
@@ -481,9 +485,9 @@ return packer.startup(function(use)
 			})
 		end,
 	})
-	use({'ray-x/go.nvim'})
-	use({'ray-x/guihua.lua'})
-	use({'mrcjkb/rustaceanvim'})
+	use({ 'ray-x/go.nvim' })
+	use({ 'ray-x/guihua.lua' })
+	use({ 'mrcjkb/rustaceanvim', ft = 'rust' })
 
 	-- Git
 	use({
@@ -495,12 +499,14 @@ return packer.startup(function(use)
 	})
 
 	-- Debugging
-	use({ "leoluz/nvim-dap-go", requires = "mfussenegger/nvim-dap",
-		config = function ()
+	use({
+		"leoluz/nvim-dap-go",
+		requires = "mfussenegger/nvim-dap",
+		config = function()
 			require("user.dap")
 		end
 	})
-	use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
+	use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } }
 	use { "anuvyklack/hydra.nvim" }
 
 
@@ -541,13 +547,13 @@ return packer.startup(function(use)
 	use {
 		'edolphin-ydf/goimpl.nvim',
 		requires = {
-			{'nvim-lua/plenary.nvim'},
-			{'nvim-lua/popup.nvim'},
-			{'nvim-telescope/telescope.nvim'},
-			{'nvim-treesitter/nvim-treesitter'},
+			{ 'nvim-lua/plenary.nvim' },
+			{ 'nvim-lua/popup.nvim' },
+			{ 'nvim-telescope/telescope.nvim' },
+			{ 'nvim-treesitter/nvim-treesitter' },
 		},
 		config = function()
-			require'telescope'.load_extension'goimpl'
+			require 'telescope'.load_extension 'goimpl'
 		end,
 	}
 	use { 'github/copilot.vim' }

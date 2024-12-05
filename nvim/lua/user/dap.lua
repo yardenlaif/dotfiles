@@ -151,3 +151,12 @@ end
 dap.listeners.before.event_exited["hydra_config"] = function()
 	debug_hydra:exit()
 end
+
+require("dap").adapters.codelldb = {
+	type = "server",
+	port = "${port}",
+	executable = {
+		command = "codelldb",
+		args = { "--port", "${port}" },
+	},
+}

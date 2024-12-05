@@ -9,19 +9,22 @@ IFS=$'\n\t'
 # gsettings set org.gnome.shell.extensions.dash-to-dock autohide true && gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false && gsettings set org.gnome.shell.extensions.dash-to-dock intellihide false
 #
 # # Git configuration
-# git config --global core.editor "vim"
+git-conf() {
+	git config --global core.editor "vim"
+	git config --global core.excludesFile '~/.gitignore'
+}
+# git-conf
 #
 # # Install terminal packages
 # sudo apt install kitty vim tmux zsh bat curl xclip net-tools playerctl
 # sudo snap install nvim --classic
 # mkdir ~/utils
-# # Zoxide
-# curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-# eval "$(zoxide init zsh)"
 #
 # # Install Rust
-# curl https://sh.rustup.rs -sSf | sh
-# source ~/.cargo/env
+rust() {
+	curl https://sh.rustup.rs -sSf | sh
+	source ~/.cargo/env
+}
 #
 # # Install go
 # curl -sL https://raw.githubusercontent.com/kevincobain2000/gobrew/master/git.io.sh | bash
@@ -61,9 +64,6 @@ IFS=$'\n\t'
 # npm install
 # npm run compile
 # cd -
-# ### Python
-# curl https://pyenv.run | bash
-# sudo apt install python3.10-venv
 # ### Java
 # wget https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.29.0/jdt-language-server-1.29.0-202310261436.tar.gz -O jdtls.tar.gz
 # mkdir ~/utils/jdtls
@@ -136,9 +136,13 @@ nvim_rust() {
 #
 # Zsh themes and plugins
 # mkdir ~/.config/zsh
-# sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-# git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/.config/zsh/zsh-snap
-# git clone https://github.com/sindresorhus/pure.git ~/.config/zsh/pure
+zsh() {
+	sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+	git clone https://github.com/sindresorhus/pure.git ~/.config/zsh/pure
+	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+}
+zsh
 #
 # # Tmux theme and plugins
 # mkdir -p ~/.tmux/plugins
@@ -160,23 +164,51 @@ wiz() {
 	curl -s https://binaries.twingate.com/client/linux/install.sh | sudo bash
 	sudo twingate setup
 	twingate desktop-start
-	sudo apt install lld libelf-dev libssl-dev flex bison clang-15
 	sudo snap install task --classic
+	sudo apt install software-properties-common
+	sudo add-apt-repository ppa:deadsnakes/ppa
+	sudo apt update
+	sudo apt install lld libelf-dev libssl-dev flex bison clang-15 pipenv python3.10-dev ssh-askpass ca-certificates curl wget gnupg lsb-release
+	curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+	# Install Docker repo
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+	# Install packages
+	sudo apt update && sudo apt install git docker-ce docker-ce-cli containerd.io awscli
 }
 # wiz
 #
 # # Me
 # git config --global user.name "Yarden Laifenfeld"
 # git config user.email "ylaifenfeld@gmail.com"
+
+pwndbg() {
+	cd ~/utils
+	git clone https://github.com/pwndbg/pwndbg
+	cd pwndbg
+	./setup.sh
+}
+# pwndbg
 #
 # # Links
-# ln -s "$PWD"/nvim/ ~/.config
-# ln -s "$PWD"/.tmux.conf ~/.tmux.conf
-# ln -s "$PWD"/zshrc ~/.zshrc
-# ln -s "$PWD"/yardenrc ~/.yardenrc
-# ln -s "$PWD"/kitty/ ~/.config/
-# ln -s "$PWD"/scripts ~/.scripts
-# touch ~/.sensitiverc
+link() {
+	ln -s "$PWD"/nvim/ ~/.config
+	ln -s "$PWD"/.tmux.conf ~/.tmux.conf
+	ln -s "$PWD"/zshrc ~/.zshrc
+	ln -s "$PWD"/kitty/ ~/.config/
+	ln -s "$PWD"/scripts ~/.scripts
+	ln -s "$PWD"/gitignore ~/.gitignore
+	touch ~/.sensitiverc
+}
+# link
+
+windows-sensor() {
+	rustup target add x86_64-pc-windows-gnu
+	sudo apt install mingw-w64 nasm
+	echo "You need docker username and pass for this next step:"
+	docker login wiziosensor.azurecr.io
+}
+# windows-sensor
 #
 # # Further instructions
 # echo

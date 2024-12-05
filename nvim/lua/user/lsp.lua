@@ -108,8 +108,20 @@ require("lspconfig")["jedi_language_server"].setup({
 })
 vim.g.rustaceanvim = {
 	server = {
-		cmd = function()
-			return { 'ra-multiplex', 'client' }
-		end,
+		-- cmd = function()
+		-- 	return { 'ra-multiplex', 'client' }
+		-- end,
+		default_settings = {
+			-- rust-analyzer language server configuration
+			['rust-analyzer'] = {
+				imports = {
+					granularity = {
+						group = "module",
+						enforce = true,
+					},
+				},
+				checkOnSave = false,
+			},
+		},
 	}
 }
